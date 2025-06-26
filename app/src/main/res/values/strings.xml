@@ -1,0 +1,191 @@
+<resources>
+    <string name="app_name">Field Service Pro</string>
+    
+    <!-- Navigation Drawer -->
+    <string name="nav_dashboard">Dashboard</string>
+    <string name="nav_work_orders">Work Orders</string>
+    <string name="nav_customers">Customers</string>
+    <string name="nav_inventory">Inventory</string>
+    <string name="nav_schedule">Schedule</string>
+    <string name="nav_reports">Reports</string>
+    <string name="nav_map">Map</string>
+    <string name="nav_settings">Settings</string>
+    <string name="nav_account">Account</string>
+    <string name="nav_help">Help</string>
+    <string name="nav_contact">Contact</string>
+    <string name="nav_logout">Logout</string>
+    
+    <!-- Login Screen -->
+    <string name="login_title">Field Service Pro</string>
+    <string name="login_subtitle">Professional Field Service Management</string>
+    <string name="email_hint">Email Address</string>
+    <string name="password_hint">Password</string>
+    <string name="login_button">Sign In</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="no_account">Don\'t have an account?</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="checking_connection">Checking connection...</string>
+    <string name="connection_failed">Connection failed. Please check your internet connection.</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="error_invalid_email">Invalid email address</string>
+    <string name="error_invalid_credentials">Invalid email or password</string>
+    <string name="logout_success">Logged out successfully</string>
+    
+    <!-- Dashboard -->
+    <string name="dashboard_title">Dashboard</string>
+    <string name="today_tasks">Today\'s Tasks</string>
+    <string name="pending_orders">Pending Orders</string>
+    <string name="completed_today">Completed Today</string>
+    <string name="total_customers">Total Customers</string>
+    <string name="recent_activities">Recent Activities</string>
+    <string name="view_all">View All</string>
+    
+    <!-- Work Orders -->
+    <string name="work_orders">Work Orders</string>
+    <string name="new_work_order">New Work Order</string>
+    <string name="work_order_id">Order #%1$s</string>
+    <string name="customer_name">Customer: %1$s</string>
+    <string name="service_type">Service: %1$s</string>
+    <string name="priority_high">High Priority</string>
+    <string name="priority_medium">Medium Priority</string>
+    <string name="priority_low">Low Priority</string>
+    <string name="status_pending">Pending</string>
+    <string name="status_in_progress">In Progress</string>
+    <string name="status_completed">Completed</string>
+    <string name="status_cancelled">Cancelled</string>
+    
+    <!-- Customer Management -->
+    <string name="customers">Customers</string>
+    <string name="add_customer">Add Customer</string>
+    <string name="customer_name_hint">Customer Name</string>
+    <string name="phone_hint">Phone Number</string>
+    <string name="address_hint">Address</string>
+    <string name="email_hint_customer">Email (Optional)</string>
+    
+    <!-- Inventory -->
+    <string name="inventory">Inventory</string>
+    <string name="add_item">Add Item</string>
+    <string name="item_name_hint">Item Name</string>
+    <string name="quantity_hint">Quantity</string>
+    <string name="price_hint">Price</string>
+    <string name="low_stock">Low Stock Alert</string>
+    
+    <!-- Reports -->
+    <string name="reports">Reports</string>
+    <string name="daily_report">Daily Report</string>
+    <string name="weekly_report">Weekly Report</string>
+    <string name="monthly_report">Monthly Report</string>
+    <string name="revenue">Revenue</string>
+    <string name="jobs_completed">Jobs Completed</string>
+    <string name="customer_satisfaction">Customer Satisfaction</string>
+    
+    <!-- Settings -->
+    <string name="settings">Settings</string>
+    <string name="notifications">Notifications</string>
+    <string name="sync_settings">Sync Settings</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="terms_of_service">Terms of Service</string>
+    <string name="about_app">About App</string>
+    <string name="version">Version %1$s</string>
+    
+    <!-- Account -->
+    <string name="account">Account</string>
+    <string name="profile">Profile</string>
+    <string name="change_password">Change Password</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="save_changes">Save Changes</string>
+    
+    <!-- Feedback -->
+    <string name="feedback">Feedback</string>
+    <string name="rate_app">Rate App</string>
+    <string name="send_feedback">Send Feedback</string>
+    <string name="feedback_hint">Tell us about your experience...</string>
+    <string name="submit_feedback">Submit Feedback</string>
+    
+    <!-- Complaints -->
+    <string name="complaints">Complaints</string>
+    <string name="new_complaint">New Complaint</string>
+    <string name="complaint_title">Complaint Title</string>
+    <string name="complaint_description">Describe the issue...</string>
+    <string name="submit_complaint">Submit Complaint</string>
+    
+    <!-- Help -->
+    <string name="help">Help</string>
+    <string name="faq">Frequently Asked Questions</string>
+    <string name="user_guide">User Guide</string>
+    <string name="video_tutorials">Video Tutorials</string>
+    <string name="contact_support">Contact Support</string>
+    
+    <!-- Contact -->
+    <string name="contact">Contact</string>
+    <string name="support_email">support@fieldservicepro.com</string>
+    <string name="support_phone">+1-800-FIELD-PRO</string>
+    <string name="office_address">123 Service Street, Business City, BC 12345</string>
+    <string name="call_support">Call Support</string>
+    <string name="email_support">Email Support</string>
+    
+    <!-- Common -->
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="delete">Delete</string>
+    <string name="edit">Edit</string>
+    <string name="add">Add</string>
+    <string name="search">Search</string>
+    <string name="filter">Filter</string>
+    <string name="sort">Sort</string>
+    <string name="refresh">Refresh</string>
+    <string name="loading">Loading...</string>
+    <string name="error">Error</string>
+    <string name="success">Success</string>
+    <string name="warning">Warning</string>
+    <string name="ok">OK</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="retry">Retry</string>
+    <string name="close">Close</string>
+    <string name="back">Back</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+    <string name="done">Done</string>
+    <string name="submit">Submit</string>
+    <string name="confirm">Confirm</string>
+    <string name="select">Select</string>
+    <string name="choose">Choose</string>
+    <string name="take_photo">Take Photo</string>
+    <string name="choose_photo">Choose Photo</string>
+    <string name="scan_qr">Scan QR Code</string>
+    <string name="location">Location</string>
+    <string name="date">Date</string>
+    <string name="time">Time</string>
+    <string name="description">Description</string>
+    <string name="notes">Notes</string>
+    <string name="status">Status</string>
+    <string name="priority">Priority</string>
+    <string name="assigned_to">Assigned To</string>
+    <string name="created_date">Created Date</string>
+    <string name="due_date">Due Date</string>
+    <string name="completion_date">Completion Date</string>
+    
+    <!-- Permissions -->
+    <string name="permission_camera">Camera permission is required to take photos</string>
+    <string name="permission_location">Location permission is required for GPS tracking</string>
+    <string name="permission_storage">Storage permission is required to save files</string>
+    <string name="permission_sms">SMS permission is required to send notifications</string>
+    
+    <!-- Network -->
+    <string name="no_internet">No internet connection</string>
+    <string name="connection_restored">Connection restored</string>
+    <string name="sync_failed">Sync failed. Please try again.</string>
+    <string name="sync_successful">Sync completed successfully</string>
+    
+    <!-- Notifications -->
+    <string name="new_work_order_notification">New work order assigned</string>
+    <string name="work_order_updated">Work order updated</string>
+    <string name="work_order_completed">Work order completed</string>
+    <string name="low_stock_notification">Low stock alert</string>
+    <string name="sync_notification">Data sync completed</string>
+    
+</resources>

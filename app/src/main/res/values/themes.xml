@@ -1,0 +1,158 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.Bizhub" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryVariant">@color/primary_dark</item>
+        <item name="colorOnPrimary">@color/white</item>
+        
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/accent</item>
+        <item name="colorSecondaryVariant">@color/accent</item>
+        <item name="colorOnSecondary">@color/white</item>
+        
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">@color/primary_dark</item>
+        
+        <!-- Background colors -->
+        <item name="android:colorBackground">@color/background</item>
+        <item name="colorSurface">@color/surface</item>
+        <item name="colorOnSurface">@color/text_primary</item>
+        
+        <!-- Text colors -->
+        <item name="android:textColorPrimary">@color/text_primary</item>
+        <item name="android:textColorSecondary">@color/text_secondary</item>
+        <item name="android:textColorHint">@color/text_hint</item>
+        
+        <!-- Card style -->
+        <item name="cardBackgroundColor">@color/card_background</item>
+        <item name="cardElevation">2dp</item>
+        
+        <!-- Button styles -->
+        <item name="materialButtonStyle">@style/Widget.Bizhub.Button</item>
+        <item name="textInputStyle">@style/Widget.Bizhub.TextInputLayout</item>
+        
+        <!-- Custom attributes -->
+        <item name="colorError">@color/error</item>
+        <item name="colorSuccess">@color/success</item>
+        <item name="colorWarning">@color/warning</item>
+        <item name="colorInfo">@color/info</item>
+    </style>
+
+    <!-- Splash screen theme -->
+    <style name="Theme.Bizhub.Splash" parent="Theme.Bizhub">
+        <item name="android:windowBackground">@drawable/splash_background</item>
+        <item name="android:statusBarColor">@color/primary</item>
+        <item name="android:navigationBarColor">@color/primary</item>
+    </style>
+
+    <!-- Button styles -->
+    <style name="Widget.Bizhub.Button" parent="Widget.Material3.Button">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="cornerRadius">8dp</item>
+        <item name="android:minHeight">56dp</item>
+    </style>
+
+    <style name="Widget.Bizhub.Button.Secondary" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="android:textColor">@color/primary</item>
+        <item name="strokeColor">@color/primary</item>
+        <item name="cornerRadius">8dp</item>
+        <item name="android:minHeight">56dp</item>
+    </style>
+
+    <!-- Text Input styles -->
+    <style name="Widget.Bizhub.TextInputLayout" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/primary</item>
+        <item name="hintTextColor">@color/primary</item>
+        <item name="android:textColorHint">@color/text_hint</item>
+    </style>
+
+    <!-- Card styles -->
+    <style name="Widget.Bizhub.Card" parent="Widget.Material3.CardView.Elevated">
+        <item name="cardBackgroundColor">@color/card_background</item>
+        <item name="cardElevation">4dp</item>
+        <item name="cornerRadius">12dp</item>
+        <item name="contentPadding">16dp</item>
+    </style>
+
+    <!-- Navigation Drawer styles -->
+    <style name="Widget.Bizhub.NavigationView" parent="Widget.Material3.NavigationView">
+        <item name="itemTextColor">@color/nav_text</item>
+        <item name="itemIconTint">@color/nav_text</item>
+        <item name="android:background">@color/nav_background</item>
+    </style>
+
+    <!-- Toolbar styles -->
+    <style name="Widget.Bizhub.Toolbar" parent="Widget.Material3.Toolbar">
+        <item name="android:background">@color/primary</item>
+        <item name="titleTextColor">@color/white</item>
+        <item name="subtitleTextColor">@color/white</item>
+        <item name="android:elevation">4dp</item>
+    </style>
+
+    <!-- Chip styles -->
+    <style name="Widget.Bizhub.Chip" parent="Widget.Material3.Chip.Assist">
+        <item name="chipBackgroundColor">@color/primary_light</item>
+        <item name="android:textColor">@color/primary</item>
+        <item name="chipStrokeColor">@color/primary</item>
+        <item name="chipStrokeWidth">1dp</item>
+    </style>
+
+    <!-- Priority chip styles -->
+    <style name="Widget.Bizhub.Chip.Priority.High" parent="Widget.Bizhub.Chip">
+        <item name="chipBackgroundColor">@color/priority_high</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="Widget.Bizhub.Chip.Priority.Medium" parent="Widget.Bizhub.Chip">
+        <item name="chipBackgroundColor">@color/priority_medium</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="Widget.Bizhub.Chip.Priority.Low" parent="Widget.Bizhub.Chip">
+        <item name="chipBackgroundColor">@color/priority_low</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <!-- Status chip styles -->
+    <style name="Widget.Bizhub.Chip.Status.Pending" parent="Widget.Bizhub.Chip">
+        <item name="chipBackgroundColor">@color/status_pending</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="Widget.Bizhub.Chip.Status.InProgress" parent="Widget.Bizhub.Chip">
+        <item name="chipBackgroundColor">@color/status_in_progress</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="Widget.Bizhub.Chip.Status.Completed" parent="Widget.Bizhub.Chip">
+        <item name="chipBackgroundColor">@color/status_completed</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="Widget.Bizhub.Chip.Status.Cancelled" parent="Widget.Bizhub.Chip">
+        <item name="chipBackgroundColor">@color/status_cancelled</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <!-- FAB styles -->
+    <style name="Widget.Bizhub.FAB" parent="Widget.Material3.FloatingActionButton.Primary">
+        <item name="backgroundTint">@color/accent</item>
+        <item name="tint">@color/white</item>
+    </style>
+
+    <!-- Progress bar styles -->
+    <style name="Widget.Bizhub.ProgressBar" parent="Widget.Material3.ProgressBar">
+        <item name="android:progressTint">@color/primary</item>
+        <item name="android:indeterminateTint">@color/primary</item>
+    </style>
+
+    <!-- Snackbar styles -->
+    <style name="Widget.Bizhub.Snackbar" parent="Widget.Material3.Snackbar">
+        <item name="android:background">@color/primary</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+</resources>
