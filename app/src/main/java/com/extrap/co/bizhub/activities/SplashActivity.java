@@ -18,30 +18,36 @@ import com.extrap.co.bizhub.utils.PreferenceManager;
 
 public class SplashActivity extends AppCompatActivity {
     
-    private static final int SPLASH_DURATION = 3000; // 3 seconds
+    private static final int SPLASH_DURATION = 2000; // 2 seconds
     private ImageView logoImageView;
     private TextView appNameTextView;
-    private TextView loadingTextView;
+    private TextView statusTextView;
     private PreferenceManager preferenceManager;
+    private NetworkUtils networkUtils;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         
-        // Initialize views
-        logoImageView = findViewById(R.id.logo_image_view);
-        appNameTextView = findViewById(R.id.app_name_text_view);
-        loadingTextView = findViewById(R.id.loading_text_view);
-        
-        // Initialize preference manager
+        // Initialize managers
         preferenceManager = FieldServiceApp.getInstance().getPreferenceManager();
+        networkUtils = FieldServiceApp.getInstance().getNetworkUtils();
+        
+        // Initialize views
+        initializeViews();
         
         // Start animations
         startAnimations();
         
-        // Check network connectivity
-        checkNetworkAndProceed();
+        // Check authentication and navigate
+        checkAuthenticationAndNavigate();
+    }
+    
+    private void initializeViews() {
+        logoImageView = findViewById(R.id.logo_image_view);
+        appNameTextView = findViewById(R.id.app_name_text_view);
+        statusTextView = findViewById(R.id.status_text_view);
     }
     
     private void startAnimations() {
@@ -50,41 +56,45 @@ public class SplashActivity extends AppCompatActivity {
         logoImageView.startAnimation(logoAnimation);
         
         // App name animation
-        Animation appNameAnimation = AnimationUtils.loadAnimation(this, R.anim.slide_up);
-        appNameTextView.startAnimation(appNameAnimation);
+        Animation nameAnimation = AnimationUtils.loadAnimation(this, R.anim.slide_up);
+        appNameTextView.startAnimation(nameAnimation);
         
-        // Loading text animation
-        Animation loadingAnimation = AnimationUtils.loadAnimation(this, R.anim.pulse);
-        loadingTextView.startAnimation(loadingAnimation);
+        // Status animation
+        Animation statusAnimation = AnimationUtils.loadAnimation(this, R.anim.pulse);
+        statusTextView.startAnimation(statusAnimation);
     }
     
-    private void checkNetworkAndProceed() {
-        // Check if network is available
-        if (NetworkUtils.getInstance().isNetworkAvailable()) {
-            proceedToNextScreen();
-        } else {
-            // Show offline message and proceed anyway
-            loadingTextView.setText(R.string.no_internet);
-            new Handler(Looper.getMainLooper()).postDelayed(this::proceedToNextScreen, SPLASH_DURATION);
-        }
-    }
-    
-    private void proceedToNextScreen() {
+    private void checkAuthenticationAndNavigate() {
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
-            Intent intent;
-            
             // Check if user is logged in
             if (preferenceManager.isLoggedIn()) {
-                // User is logged in, go to dashboard
-                intent = new Intent(SplashActivity.this, DashboardActivity.class);
+                // Check network connectivity
+                if (networkUtils.isNetworkAvailable()) {
+                    statusTextView.setText("Connecting to server...");
+                    // TODO: Validate session with server
+                    navigateToDashboard();
+                } else {
+                    statusTextView.setText("Offline mode");
+                    // Allow offline access if previously logged in
+                    navigateToDashboard();
+                }
             } else {
-                // User is not logged in, go to login
-                intent = new Intent(SplashActivity.this, LoginActivity.class);
+                statusTextView.setText("Welcome to BizHub");
+                navigateToLogin();
             }
-            
-            startActivity(intent);
-            finish();
         }, SPLASH_DURATION);
+    }
+    
+    private void navigateToDashboard() {
+        Intent intent = new Intent(SplashActivity.this, DashboardActivity.class);
+        startActivity(intent);
+        finish();
+    }
+    
+    private void navigateToLogin() {
+        Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+        startActivity(intent);
+        finish();
     }
     
     @Override
@@ -97,8 +107,8 @@ public class SplashActivity extends AppCompatActivity {
         if (appNameTextView != null) {
             appNameTextView.clearAnimation();
         }
-        if (loadingTextView != null) {
-            loadingTextView.clearAnimation();
+        if (statusTextView != null) {
+            statusTextView.clearAnimation();
         }
     }
 } 

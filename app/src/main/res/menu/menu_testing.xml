@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_clear_results"
+        android:icon="@drawable/ic_clear"
+        android:title="Clear Results"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_export_results"
+        android:icon="@drawable/ic_export"
+        android:title="Export Results"
+        app:showAsAction="ifRoom" />
+
+</menu> 

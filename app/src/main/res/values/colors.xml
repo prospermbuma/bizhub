@@ -4,7 +4,7 @@
     <color name="primary">#1976D2</color>
     <color name="primary_dark">#1565C0</color>
     <color name="primary_light">#BBDEFB</color>
-    <color name="accent">#FF9800</color>
+    <color name="accent">#FF4081</color>
     
     <!-- Secondary Colors -->
     <color name="secondary">#424242</color>
@@ -22,15 +22,15 @@
     <color name="info_light">#BBDEFB</color>
     
     <!-- Priority Colors -->
-    <color name="priority_high">#F44336</color>
-    <color name="priority_medium">#FF9800</color>
-    <color name="priority_low">#4CAF50</color>
+    <color name="priority_high">#FFEBEE</color>
+    <color name="priority_medium">#FFF3E0</color>
+    <color name="priority_low">#E8F5E8</color>
     
     <!-- Status Colors -->
-    <color name="status_pending">#FF9800</color>
-    <color name="status_in_progress">#2196F3</color>
-    <color name="status_completed">#4CAF50</color>
-    <color name="status_cancelled">#9E9E9E</color>
+    <color name="status_pending">#FFF3E0</color>
+    <color name="status_in_progress">#E3F2FD</color>
+    <color name="status_completed">#E8F5E8</color>
+    <color name="status_cancelled">#FFEBEE</color>
     
     <!-- Background Colors -->
     <color name="background">#FAFAFA</color>
@@ -46,8 +46,8 @@
     <color name="text_white">#FFFFFF</color>
     
     <!-- Material Design Colors -->
-    <color name="black">#000000</color>
-    <color name="white">#FFFFFF</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
     <color name="transparent">#00000000</color>
     
     <!-- Gradient Colors -->
@@ -75,4 +75,12 @@
     <color name="chart_purple">#9C27B0</color>
     <color name="chart_teal">#009688</color>
     
+    <!-- Connection Status -->
+    <color name="connection_online">#4CAF50</color>
+    <color name="connection_offline">#F44336</color>
+    <color name="connection_syncing">#FF9800</color>
+    
+    <!-- Settings Colors -->
+    <color name="background_light">#FAFAFA</color>
+    <color name="ripple">#1F000000</color>
 </resources>

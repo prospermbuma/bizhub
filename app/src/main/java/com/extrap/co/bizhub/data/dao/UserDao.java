@@ -59,4 +59,19 @@ public interface UserDao {
     
     @Query("SELECT * FROM users WHERE role = 'technician' AND isActive = 1 ORDER BY firstName ASC")
     LiveData<List<User>> getActiveTechnicians();
+    
+    @Query("SELECT * FROM users ORDER BY first_name ASC")
+    LiveData<List<User>> getAllUsers();
+    
+    @Query("SELECT * FROM users WHERE id = :id")
+    User getUserById(long id);
+    
+    @Query("SELECT * FROM users WHERE first_name LIKE '%' || :searchQuery || '%' OR last_name LIKE '%' || :searchQuery || '%' OR email LIKE '%' || :searchQuery || '%'")
+    List<User> searchUsers(String searchQuery);
+    
+    @Query("SELECT COUNT(*) FROM users WHERE role = :role")
+    int getUsersCountByRole(String role);
+    
+    @Query("DELETE FROM users WHERE id = :id")
+    void deleteUserById(long id);
 } 

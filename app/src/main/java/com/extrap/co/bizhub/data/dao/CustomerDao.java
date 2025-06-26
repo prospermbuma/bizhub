@@ -53,4 +53,50 @@ public interface CustomerDao {
     
     @Query("SELECT * FROM customers ORDER BY name ASC")
     LiveData<List<Customer>> getAllCustomersSorted();
+    
+    @Query("SELECT * FROM customers WHERE email = :email")
+    Customer getCustomerByEmail(String email);
+    
+    @Query("SELECT * FROM customers WHERE phone = :phone")
+    Customer getCustomerByPhone(String phone);
+    
+    @Query("DELETE FROM customers WHERE id = :id")
+    void deleteCustomerById(long id);
+    
+    // Additional methods for CustomerViewModel
+    @Query("SELECT * FROM customers WHERE name LIKE :searchQuery OR email LIKE :searchQuery OR phone LIKE :searchQuery OR company LIKE :searchQuery")
+    List<Customer> searchCustomers(String searchQuery);
+    
+    @Query("SELECT * FROM customers WHERE isActive = :isActive")
+    List<Customer> getCustomersByStatus(boolean isActive);
+    
+    @Query("SELECT * FROM customers WHERE isPremium = :isPremium")
+    List<Customer> getCustomersByType(boolean isPremium);
+    
+    @Query("SELECT * FROM customers ORDER BY name ASC")
+    List<Customer> getCustomersSortedByName();
+    
+    @Query("SELECT * FROM customers ORDER BY company ASC")
+    List<Customer> getCustomersSortedByCompany();
+    
+    @Query("SELECT * FROM customers ORDER BY dateAdded DESC")
+    List<Customer> getCustomersSortedByDate();
+    
+    @Query("SELECT * FROM customers")
+    List<Customer> getAllCustomersSync();
+    
+    @Query("SELECT COUNT(*) FROM customers")
+    LiveData<Integer> getCustomerCount();
+    
+    @Query("SELECT COUNT(*) FROM customers WHERE isActive = 1")
+    LiveData<Integer> getActiveCustomerCount();
+    
+    @Query("SELECT COUNT(*) FROM customers WHERE isPremium = 1")
+    LiveData<Integer> getPremiumCustomerCount();
+    
+    @Query("SELECT * FROM customers WHERE id = :id")
+    LiveData<Customer> getCustomerById(long id);
+    
+    @Query("UPDATE customers SET isActive = :isActive WHERE id = :customerId")
+    int updateCustomerStatus(long customerId, boolean isActive);
 } 

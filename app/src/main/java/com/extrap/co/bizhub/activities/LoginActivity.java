@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.extrap.co.bizhub.FieldServiceApp;
 import com.extrap.co.bizhub.R;
@@ -29,9 +30,9 @@ public class LoginActivity extends AppCompatActivity {
     private TextInputEditText emailEditText;
     private TextInputEditText passwordEditText;
     private Button loginButton;
-    private Button signUpButton;
-    private TextView forgotPasswordText;
     private ProgressBar progressBar;
+    private TextView forgotPasswordText;
+    private TextView signUpText;
     private TextView connectionStatusText;
     
     private PreferenceManager preferenceManager;
@@ -42,18 +43,27 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         
-        // Initialize views
-        initializeViews();
-        
         // Initialize managers
         preferenceManager = FieldServiceApp.getInstance().getPreferenceManager();
         executorService = Executors.newSingleThreadExecutor();
         
+        // Initialize views
+        initializeViews();
+        
+        // Setup toolbar
+        setupToolbar();
+        
+        // Setup click listeners
+        setupClickListeners();
+        
+        // Check if email was passed from sign up
+        String email = getIntent().getStringExtra("email");
+        if (email != null) {
+            emailEditText.setText(email);
+        }
+        
         // Check network connection
         checkNetworkConnection();
-        
-        // Set up click listeners
-        setupClickListeners();
     }
     
     private void initializeViews() {
@@ -62,31 +72,29 @@ public class LoginActivity extends AppCompatActivity {
         emailEditText = findViewById(R.id.email_edit_text);
         passwordEditText = findViewById(R.id.password_edit_text);
         loginButton = findViewById(R.id.login_button);
-        signUpButton = findViewById(R.id.sign_up_button);
-        forgotPasswordText = findViewById(R.id.forgot_password_text);
         progressBar = findViewById(R.id.progress_bar);
+        forgotPasswordText = findViewById(R.id.forgot_password_text);
+        signUpText = findViewById(R.id.sign_up_text);
         connectionStatusText = findViewById(R.id.connection_status_text);
     }
     
-    private void checkNetworkConnection() {
-        if (NetworkUtils.getInstance().isNetworkAvailable()) {
-            connectionStatusText.setVisibility(View.GONE);
-        } else {
-            connectionStatusText.setVisibility(View.VISIBLE);
-            connectionStatusText.setText(R.string.no_internet);
-        }
+    private void setupToolbar() {
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(R.string.login);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
     
     private void setupClickListeners() {
         loginButton.setOnClickListener(v -> attemptLogin());
         
-        signUpButton.setOnClickListener(v -> {
-            Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
+        forgotPasswordText.setOnClickListener(v -> {
+            Intent intent = new Intent(LoginActivity.this, ResetPasswordActivity.class);
             startActivity(intent);
         });
         
-        forgotPasswordText.setOnClickListener(v -> {
-            Intent intent = new Intent(LoginActivity.this, ResetPasswordActivity.class);
+        signUpText.setOnClickListener(v -> {
+            Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
             startActivity(intent);
         });
     }
@@ -100,9 +108,15 @@ public class LoginActivity extends AppCompatActivity {
         String email = emailEditText.getText().toString().trim();
         String password = passwordEditText.getText().toString().trim();
         
-        // Check for valid input
+        // Validate input
         if (TextUtils.isEmpty(email)) {
             emailLayout.setError(getString(R.string.error_field_required));
+            emailEditText.requestFocus();
+            return;
+        }
+        
+        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            emailLayout.setError(getString(R.string.error_invalid_email));
             emailEditText.requestFocus();
             return;
         }
@@ -113,46 +127,39 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
         
-        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            emailLayout.setError(getString(R.string.error_invalid_email));
-            emailEditText.requestFocus();
-            return;
-        }
-        
         // Show progress
         showProgress(true);
         
-        // Perform authentication
+        // Authenticate user
+        authenticateUser(email, password);
+    }
+    
+    private void authenticateUser(String email, String password) {
         executorService.execute(() -> {
-            User user = FieldServiceApp.getInstance().getDatabase().userDao().authenticateUser(email, password);
+            // Check user in database
+            User user = FieldServiceApp.getInstance().getDatabase().userDao().getUserByEmail(email);
             
             runOnUiThread(() -> {
-                showProgress(false);
-                
-                if (user != null) {
+                if (user != null && user.getPassword().equals(password)) {
                     // Login successful
-                    saveUserData(user);
+                    saveUserSession(user);
                     navigateToDashboard();
                 } else {
                     // Login failed
-                    Toast.makeText(LoginActivity.this, R.string.error_invalid_credentials, Toast.LENGTH_LONG).show();
+                    showProgress(false);
+                    passwordLayout.setError("Invalid email or password");
+                    passwordEditText.requestFocus();
                 }
             });
         });
     }
     
-    private void saveUserData(User user) {
+    private void saveUserSession(User user) {
+        preferenceManager.setLoggedIn(true);
         preferenceManager.setUserId(user.getId());
         preferenceManager.setUserEmail(user.getEmail());
-        preferenceManager.setUserName(user.getFullName());
+        preferenceManager.setUserName(user.getFirstName() + " " + user.getLastName());
         preferenceManager.setUserRole(user.getRole());
-        preferenceManager.setLoggedIn(true);
-        
-        // Update last login time
-        executorService.execute(() -> {
-            user.setLastLoginAt(System.currentTimeMillis());
-            FieldServiceApp.getInstance().getDatabase().userDao().updateUser(user);
-        });
     }
     
     private void navigateToDashboard() {
@@ -165,7 +172,15 @@ public class LoginActivity extends AppCompatActivity {
     private void showProgress(boolean show) {
         progressBar.setVisibility(show ? View.VISIBLE : View.GONE);
         loginButton.setEnabled(!show);
-        signUpButton.setEnabled(!show);
+    }
+    
+    private void checkNetworkConnection() {
+        if (NetworkUtils.getInstance().isNetworkAvailable()) {
+            connectionStatusText.setVisibility(View.GONE);
+        } else {
+            connectionStatusText.setVisibility(View.VISIBLE);
+            connectionStatusText.setText(R.string.no_internet);
+        }
     }
     
     @Override

@@ -12,6 +12,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,8 +23,20 @@ import com.extrap.co.bizhub.FieldServiceApp;
 import com.extrap.co.bizhub.R;
 import com.extrap.co.bizhub.adapters.RecentActivityAdapter;
 import com.extrap.co.bizhub.data.entities.WorkOrder;
+import com.extrap.co.bizhub.fragments.ComplaintsFragment;
+import com.extrap.co.bizhub.fragments.CustomersFragment;
+import com.extrap.co.bizhub.fragments.DashboardFragment;
+import com.extrap.co.bizhub.fragments.FeedbackFragment;
+import com.extrap.co.bizhub.fragments.HelpFragment;
+import com.extrap.co.bizhub.fragments.OfflineFragment;
+import com.extrap.co.bizhub.fragments.PrivacyPolicyFragment;
+import com.extrap.co.bizhub.fragments.ProfileFragment;
+import com.extrap.co.bizhub.fragments.ReportsFragment;
+import com.extrap.co.bizhub.fragments.SettingsFragment;
+import com.extrap.co.bizhub.fragments.WorkOrdersFragment;
 import com.extrap.co.bizhub.utils.PreferenceManager;
 import com.extrap.co.bizhub.viewmodels.DashboardViewModel;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
@@ -33,6 +48,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
     
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
+    private BottomNavigationView bottomNavigationView;
     private Toolbar toolbar;
     private DashboardViewModel viewModel;
     private PreferenceManager preferenceManager;
@@ -67,6 +83,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         // Setup toolbar and navigation
         setupToolbar();
         setupNavigationDrawer();
+        setupBottomNavigation();
         
         // Initialize ViewModel
         viewModel = new ViewModelProvider(this).get(DashboardViewModel.class);
@@ -76,11 +93,15 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         
         // Observe data
         observeData();
+        
+        // Load default fragment
+        loadFragment(new DashboardFragment());
     }
     
     private void initializeViews() {
         drawerLayout = findViewById(R.id.drawer_layout);
-        navigationView = findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.navigation_view);
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
         toolbar = findViewById(R.id.toolbar);
         
         // Dashboard cards
@@ -118,6 +139,36 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         setupNavigationHeader();
     }
     
+    private void setupBottomNavigation() {
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+            int id = item.getItemId();
+            
+            if (id == R.id.navigation_dashboard) {
+                loadFragment(new DashboardFragment());
+                getSupportActionBar().setTitle(R.string.dashboard_title);
+                return true;
+            } else if (id == R.id.navigation_work_orders) {
+                loadFragment(new WorkOrdersFragment());
+                getSupportActionBar().setTitle(R.string.work_orders);
+                return true;
+            } else if (id == R.id.navigation_add) {
+                // TODO: Show add work order dialog or navigate to add screen
+                Snackbar.make(drawerLayout, "Add new work order", Snackbar.LENGTH_SHORT).show();
+                return true;
+            } else if (id == R.id.navigation_map) {
+                // TODO: Show map view
+                Snackbar.make(drawerLayout, "Map view", Snackbar.LENGTH_SHORT).show();
+                return true;
+            } else if (id == R.id.navigation_profile) {
+                loadFragment(new ProfileFragment());
+                getSupportActionBar().setTitle(R.string.account);
+                return true;
+            }
+            
+            return false;
+        });
+    }
+    
     private void setupNavigationHeader() {
         View headerView = navigationView.getHeaderView(0);
         TextView userNameText = headerView.findViewById(R.id.nav_user_name);
@@ -139,27 +190,35 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
     
     private void setupCardClickListeners() {
         todayTasksCard.setOnClickListener(v -> {
-            Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtra("filter", "today");
-            startActivity(intent);
+            loadFragment(new WorkOrdersFragment());
+            getSupportActionBar().setTitle("Today's Work Orders");
+            bottomNavigationView.setSelectedItemId(R.id.navigation_work_orders);
         });
         
         pendingOrdersCard.setOnClickListener(v -> {
-            Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtra("filter", "pending");
-            startActivity(intent);
+            loadFragment(new WorkOrdersFragment());
+            getSupportActionBar().setTitle("Pending Work Orders");
+            bottomNavigationView.setSelectedItemId(R.id.navigation_work_orders);
         });
         
         completedTodayCard.setOnClickListener(v -> {
-            Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtra("filter", "completed_today");
-            startActivity(intent);
+            loadFragment(new WorkOrdersFragment());
+            getSupportActionBar().setTitle("Completed Today");
+            bottomNavigationView.setSelectedItemId(R.id.navigation_work_orders);
         });
         
         totalCustomersCard.setOnClickListener(v -> {
-            Intent intent = new Intent(this, CustomerActivity.class);
-            startActivity(intent);
+            loadFragment(new CustomersFragment());
+            getSupportActionBar().setTitle(R.string.customers);
         });
+    }
+    
+    public void loadFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.fragment_container, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
     
     private void observeData() {
@@ -191,27 +250,41 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         int id = item.getItemId();
         
         if (id == R.id.nav_dashboard) {
-            // Already on dashboard
+            loadFragment(new DashboardFragment());
+            getSupportActionBar().setTitle(R.string.dashboard_title);
+            bottomNavigationView.setSelectedItemId(R.id.navigation_dashboard);
         } else if (id == R.id.nav_work_orders) {
-            startActivity(new Intent(this, MainActivity.class));
+            loadFragment(new WorkOrdersFragment());
+            getSupportActionBar().setTitle(R.string.work_orders);
+            bottomNavigationView.setSelectedItemId(R.id.navigation_work_orders);
         } else if (id == R.id.nav_customers) {
-            startActivity(new Intent(this, CustomerActivity.class));
-        } else if (id == R.id.nav_inventory) {
-            startActivity(new Intent(this, InventoryActivity.class));
-        } else if (id == R.id.nav_schedule) {
-            startActivity(new Intent(this, ScheduleActivity.class));
+            loadFragment(new CustomersFragment());
+            getSupportActionBar().setTitle(R.string.customers);
         } else if (id == R.id.nav_reports) {
-            startActivity(new Intent(this, ReportActivity.class));
-        } else if (id == R.id.nav_map) {
-            startActivity(new Intent(this, MapActivity.class));
+            loadFragment(new ReportsFragment());
+            getSupportActionBar().setTitle(R.string.reports);
+        } else if (id == R.id.nav_profile) {
+            loadFragment(new ProfileFragment());
+            getSupportActionBar().setTitle(R.string.account);
+            bottomNavigationView.setSelectedItemId(R.id.navigation_profile);
         } else if (id == R.id.nav_settings) {
-            startActivity(new Intent(this, SettingsActivity.class));
-        } else if (id == R.id.nav_account) {
-            startActivity(new Intent(this, AccountActivity.class));
+            loadFragment(new SettingsFragment());
+            getSupportActionBar().setTitle(R.string.settings);
+        } else if (id == R.id.nav_offline) {
+            loadFragment(new OfflineFragment());
+            getSupportActionBar().setTitle(R.string.offline_mode);
+        } else if (id == R.id.nav_feedback) {
+            loadFragment(new FeedbackFragment());
+            getSupportActionBar().setTitle(R.string.feedback);
+        } else if (id == R.id.nav_complaints) {
+            loadFragment(new ComplaintsFragment());
+            getSupportActionBar().setTitle(R.string.complaints);
         } else if (id == R.id.nav_help) {
-            startActivity(new Intent(this, HelpActivity.class));
-        } else if (id == R.id.nav_contact) {
-            startActivity(new Intent(this, ContactActivity.class));
+            loadFragment(new HelpFragment());
+            getSupportActionBar().setTitle(R.string.help);
+        } else if (id == R.id.nav_privacy) {
+            loadFragment(new PrivacyPolicyFragment());
+            getSupportActionBar().setTitle(R.string.privacy_policy);
         } else if (id == R.id.nav_logout) {
             logout();
         }
@@ -221,16 +294,14 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
     }
     
     private void logout() {
-        // Clear user data
-        preferenceManager.clearUserData();
+        // Clear user session
+        preferenceManager.clearUserSession();
         
         // Navigate to login
         Intent intent = new Intent(this, LoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finish();
-        
-        Snackbar.make(drawerLayout, R.string.logout_success, Snackbar.LENGTH_SHORT).show();
     }
     
     @Override
@@ -245,7 +316,11 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            drawerLayout.openDrawer(GravityCompat.START);
+            if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                drawerLayout.closeDrawer(GravityCompat.START);
+            } else {
+                drawerLayout.openDrawer(GravityCompat.START);
+            }
             return true;
         }
         return super.onOptionsItemSelected(item);

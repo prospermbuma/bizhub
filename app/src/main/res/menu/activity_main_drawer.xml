@@ -1,74 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_dashboard"
             android:icon="@drawable/ic_dashboard"
-            android:title="@string/nav_dashboard" />
-        
+            android:title="@string/dashboard" />
         <item
             android:id="@+id/nav_work_orders"
             android:icon="@drawable/ic_work_order"
-            android:title="@string/nav_work_orders" />
-        
+            android:title="@string/work_orders" />
         <item
             android:id="@+id/nav_customers"
             android:icon="@drawable/ic_people"
-            android:title="@string/nav_customers" />
-        
-        <item
-            android:id="@+id/nav_inventory"
-            android:icon="@drawable/ic_inventory"
-            android:title="@string/nav_inventory" />
-        
-        <item
-            android:id="@+id/nav_schedule"
-            android:icon="@drawable/ic_schedule"
-            android:title="@string/nav_schedule" />
-        
+            android:title="@string/customers" />
         <item
             android:id="@+id/nav_reports"
-            android:icon="@drawable/ic_reports"
-            android:title="@string/nav_reports" />
-        
-        <item
-            android:id="@+id/nav_map"
-            android:icon="@drawable/ic_map"
-            android:title="@string/nav_map" />
+            android:icon="@drawable/ic_report"
+            android:title="@string/reports" />
     </group>
 
-    <item android:title="Settings">
+    <item android:title="@string/account">
         <menu>
+            <item
+                android:id="@+id/nav_profile"
+                android:icon="@drawable/ic_person"
+                android:title="@string/account" />
             <item
                 android:id="@+id/nav_settings"
                 android:icon="@drawable/ic_settings"
-                android:title="@string/nav_settings" />
-            
+                android:title="@string/settings" />
             <item
-                android:id="@+id/nav_account"
-                android:icon="@drawable/ic_account"
-                android:title="@string/nav_account" />
+                android:id="@+id/nav_offline"
+                android:icon="@drawable/ic_sync"
+                android:title="@string/offline_mode" />
         </menu>
     </item>
 
-    <item android:title="Support">
+    <item android:title="@string/support">
         <menu>
+            <item
+                android:id="@+id/nav_feedback"
+                android:icon="@drawable/ic_feedback"
+                android:title="@string/feedback" />
+            <item
+                android:id="@+id/nav_complaints"
+                android:icon="@drawable/ic_complaint"
+                android:title="@string/complaints" />
             <item
                 android:id="@+id/nav_help"
                 android:icon="@drawable/ic_help"
-                android:title="@string/nav_help" />
-            
+                android:title="@string/help" />
             <item
-                android:id="@+id/nav_contact"
-                android:icon="@drawable/ic_contact"
-                android:title="@string/nav_contact" />
+                android:id="@+id/nav_privacy"
+                android:icon="@drawable/ic_privacy"
+                android:title="@string/privacy_policy" />
         </menu>
     </item>
 
-    <item
-        android:id="@+id/nav_logout"
-        android:icon="@drawable/ic_logout"
-        android:title="@string/nav_logout" />
+    <item android:title="@string/actions">
+        <menu>
+            <item
+                android:id="@+id/nav_logout"
+                android:icon="@drawable/ic_logout"
+                android:title="@string/logout" />
+        </menu>
+    </item>
 
 </menu> 

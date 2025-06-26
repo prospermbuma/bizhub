@@ -35,6 +35,7 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
+        android:name=".FieldServiceApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -136,7 +137,7 @@
 
         <!-- Work Order Details Activity -->
         <activity
-            android:name=".activities.WorkOrderActivity"
+            android:name=".activities.WorkOrderDetailsActivity"
             android:exported="false" />
 
         <!-- Customer Activity -->
@@ -168,6 +169,20 @@
         <activity
             android:name=".activities.ReceiptActivity"
             android:exported="false" />
+
+        <!-- Services -->
+        <service
+            android:name=".services.SyncService"
+            android:exported="false" />
+
+        <!-- Receivers -->
+        <receiver
+            android:name=".receivers.BootReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
 
     </application>
 

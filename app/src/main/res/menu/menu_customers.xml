@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- Export Customers -->
+    <item
+        android:id="@+id/action_export_customers"
+        android:icon="@drawable/ic_export"
+        android:title="Export Customers"
+        app:showAsAction="ifRoom" />
+
+    <!-- Import Customers -->
+    <item
+        android:id="@+id/action_import_customers"
+        android:icon="@drawable/ic_import"
+        android:title="Import Customers"
+        app:showAsAction="ifRoom" />
+
+    <!-- Sort Menu -->
+    <item
+        android:id="@+id/action_sort"
+        android:icon="@drawable/ic_sort"
+        android:title="Sort"
+        app:showAsAction="ifRoom">
+
+        <menu>
+            <item
+                android:id="@+id/action_sort_by_name"
+                android:title="Sort by Name" />
+
+            <item
+                android:id="@+id/action_sort_by_company"
+                android:title="Sort by Company" />
+
+            <item
+                android:id="@+id/action_sort_by_date"
+                android:title="Sort by Date Added" />
+
+        </menu>
+
+    </item>
+
+</menu> 

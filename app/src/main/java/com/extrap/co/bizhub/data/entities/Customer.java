@@ -9,7 +9,9 @@ public class Customer {
     private int id;
     
     private String name;
+    private String company;
     private String email;
+    private String phone;
     private String phoneNumber;
     private String address;
     private String city;
@@ -21,8 +23,10 @@ public class Customer {
     private String customerType; // residential, commercial, industrial
     private String notes;
     private boolean isActive;
+    private boolean isPremium;
     private long createdAt;
     private long updatedAt;
+    private long dateAdded;
     
     // Constructors
     public Customer() {}
@@ -33,8 +37,10 @@ public class Customer {
         this.phoneNumber = phoneNumber;
         this.address = address;
         this.isActive = true;
+        this.isPremium = false;
         this.createdAt = System.currentTimeMillis();
         this.updatedAt = System.currentTimeMillis();
+        this.dateAdded = System.currentTimeMillis();
     }
     
     // Getters and Setters
@@ -54,12 +60,28 @@ public class Customer {
         this.name = name;
     }
     
+    public String getCompany() {
+        return company;
+    }
+    
+    public void setCompany(String company) {
+        this.company = company;
+    }
+    
     public String getEmail() {
         return email;
     }
     
     public void setEmail(String email) {
         this.email = email;
+    }
+    
+    public String getPhone() {
+        return phone != null ? phone : phoneNumber;
+    }
+    
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
     
     public String getPhoneNumber() {
@@ -150,6 +172,14 @@ public class Customer {
         isActive = active;
     }
     
+    public boolean isPremium() {
+        return isPremium;
+    }
+    
+    public void setPremium(boolean premium) {
+        isPremium = premium;
+    }
+    
     public long getCreatedAt() {
         return createdAt;
     }
@@ -164,6 +194,14 @@ public class Customer {
     
     public void setUpdatedAt(long updatedAt) {
         this.updatedAt = updatedAt;
+    }
+    
+    public long getDateAdded() {
+        return dateAdded;
+    }
+    
+    public void setDateAdded(long dateAdded) {
+        this.dateAdded = dateAdded;
     }
     
     public String getFullAddress() {

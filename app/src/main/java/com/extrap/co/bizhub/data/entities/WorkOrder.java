@@ -33,6 +33,7 @@ public class WorkOrder {
     private String recurringPattern; // daily, weekly, monthly, yearly
     private long createdAt;
     private long updatedAt;
+    private String syncStatus = "synced"; // synced, pending, error
     
     // Constructors
     public WorkOrder() {}
@@ -255,6 +256,14 @@ public class WorkOrder {
     
     public void setUpdatedAt(long updatedAt) {
         this.updatedAt = updatedAt;
+    }
+    
+    public String getSyncStatus() {
+        return syncStatus;
+    }
+    
+    public void setSyncStatus(String syncStatus) {
+        this.syncStatus = syncStatus;
     }
     
     // Helper methods
