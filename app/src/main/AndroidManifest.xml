@@ -165,6 +165,21 @@
             android:name=".activities.CameraActivity"
             android:exported="false" />
 
+        <!-- Hardware Activity -->
+        <activity
+            android:name=".activities.HardwareActivity"
+            android:exported="false" />
+
+        <!-- Analytics Activity -->
+        <activity
+            android:name=".activities.AnalyticsActivity"
+            android:exported="false" />
+
+        <!-- Testing Activity -->
+        <activity
+            android:name=".activities.TestingActivity"
+            android:exported="false" />
+
         <!-- Receipt Activity -->
         <activity
             android:name=".activities.ReceiptActivity"
