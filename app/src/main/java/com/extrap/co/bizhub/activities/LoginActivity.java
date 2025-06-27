@@ -16,6 +16,7 @@ import com.extrap.co.bizhub.FieldServiceApp;
 import com.extrap.co.bizhub.R;
 import com.extrap.co.bizhub.data.entities.User;
 import com.extrap.co.bizhub.utils.NetworkUtils;
+import com.extrap.co.bizhub.utils.PasswordUtils;
 import com.extrap.co.bizhub.utils.PreferenceManager;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -136,11 +137,17 @@ public class LoginActivity extends AppCompatActivity {
     
     private void authenticateUser(String email, String password) {
         executorService.execute(() -> {
-            // Check user in database
             User user = FieldServiceApp.getInstance().getDatabase().userDao().getUserByEmail(email);
-            
+            if (user != null) {
+                // If the stored password is not hashed (legacy), hash and update it
+                if (user.getPassword().length() < 64) { // SHA-256 hash is 64 hex chars
+                    String hashed = PasswordUtils.hashPassword(user.getPassword());
+                    user.setPassword(hashed);
+                    FieldServiceApp.getInstance().getDatabase().userDao().updateUser(user);
+                }
+            }
             runOnUiThread(() -> {
-                if (user != null && user.getPassword().equals(password)) {
+                if (user != null && PasswordUtils.verifyPassword(password, user.getPassword())) {
                     // Login successful
                     saveUserSession(user);
                     navigateToDashboard();

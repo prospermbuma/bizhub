@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel;
 import com.extrap.co.bizhub.FieldServiceApp;
 import com.extrap.co.bizhub.data.entities.User;
 import com.extrap.co.bizhub.utils.PreferenceManager;
+import com.extrap.co.bizhub.utils.PasswordUtils;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -108,8 +109,8 @@ public class ProfileViewModel extends ViewModel {
         executorService.execute(() -> {
             try {
                 User user = currentUser.getValue();
-                if (user != null && user.getPassword().equals(currentPassword)) {
-                    user.setPassword(newPassword);
+                if (user != null && PasswordUtils.verifyPassword(currentPassword, user.getPassword())) {
+                    user.setPassword(PasswordUtils.hashPassword(newPassword));
                     
                     // Update in database
                     FieldServiceApp.getInstance().getDatabase()
@@ -138,5 +139,26 @@ public class ProfileViewModel extends ViewModel {
     
     public void clearProfileUpdateFlag() {
         isProfileUpdated.setValue(false);
+    }
+    
+    public void resetPasswordWithSecurityAnswer(String email, String securityAnswer, String newPassword) {
+        isLoading.setValue(true);
+        executorService.execute(() -> {
+            try {
+                User user = FieldServiceApp.getInstance().getDatabase().userDao().getUserByEmail(email);
+                if (user != null && user.getSecurityAnswer() != null && user.getSecurityAnswer().equalsIgnoreCase(securityAnswer.trim())) {
+                    user.setPassword(PasswordUtils.hashPassword(newPassword));
+                    FieldServiceApp.getInstance().getDatabase().userDao().updateUser(user);
+                    currentUser.postValue(user);
+                    isProfileUpdated.postValue(true);
+                } else {
+                    errorMessage.postValue("Security answer is incorrect");
+                }
+                isLoading.postValue(false);
+            } catch (Exception e) {
+                errorMessage.postValue("Error resetting password: " + e.getMessage());
+                isLoading.postValue(false);
+            }
+        });
     }
 } 

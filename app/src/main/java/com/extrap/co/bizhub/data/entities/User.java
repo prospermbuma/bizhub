@@ -18,6 +18,8 @@ public class User {
     private boolean isActive;
     private long createdAt;
     private long lastLoginAt;
+    private String securityQuestion;
+    private String securityAnswer;
     
     // Constructors
     public User() {}
@@ -124,5 +126,21 @@ public class User {
     
     public String getFullName() {
         return firstName + " " + lastName;
+    }
+    
+    public String getSecurityQuestion() {
+        return securityQuestion;
+    }
+    
+    public void setSecurityQuestion(String securityQuestion) {
+        this.securityQuestion = securityQuestion;
+    }
+    
+    public String getSecurityAnswer() {
+        return securityAnswer;
+    }
+    
+    public void setSecurityAnswer(String securityAnswer) {
+        this.securityAnswer = securityAnswer;
     }
 } 

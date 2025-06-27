@@ -46,15 +46,6 @@
         android:theme="@style/Theme.Bizhub"
         tools:targetApi="31">
 
-        <!-- Firebase Messaging Service -->
-        <service
-            android:name=".services.FirebaseMessagingService"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-            </intent-filter>
-        </service>
-
         <!-- Splash Activity -->
         <activity
             android:name=".activities.SplashActivity"

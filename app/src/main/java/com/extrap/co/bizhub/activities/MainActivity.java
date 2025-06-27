@@ -17,8 +17,11 @@ import com.extrap.co.bizhub.R;
 import com.extrap.co.bizhub.adapters.WorkOrderAdapter;
 import com.extrap.co.bizhub.viewmodels.WorkOrderViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import android.util.Log;
 
 public class MainActivity extends AppCompatActivity {
+    
+    private static final String TAG = "MainActivity";
     
     private Toolbar toolbar;
     private RecyclerView workOrdersRecyclerView;
@@ -28,19 +31,43 @@ public class MainActivity extends AppCompatActivity {
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        
-        initializeViews();
-        setupToolbar();
-        setupRecyclerView();
-        setupViewModel();
-        setupClickListeners();
-        
-        // Check for filter from intent
-        String filter = getIntent().getStringExtra("filter");
-        if (filter != null) {
-            applyFilter(filter);
+        try {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_main);
+            
+            Log.d(TAG, "MainActivity onCreate started");
+            
+            // Initialize managers
+            // preferenceManager = FieldServiceApp.getInstance().getPreferenceManager();
+            // networkUtils = FieldServiceApp.getInstance().getNetworkUtils();
+            
+            // Initialize views
+            initializeViews();
+            
+            // Setup navigation
+            setupToolbar();
+            setupRecyclerView();
+            setupViewModel();
+            setupClickListeners();
+            
+            // Check for filter from intent
+            String filter = getIntent().getStringExtra("filter");
+            if (filter != null) {
+                applyFilter(filter);
+            }
+            
+            // Check authentication
+            // checkAuthentication();
+            
+            Log.d(TAG, "MainActivity onCreate completed successfully");
+            
+        } catch (Exception e) {
+            Log.e(TAG, "Error in MainActivity onCreate", e);
+            // Check if this might be related to the unknown error
+            if (e.getMessage() != null && e.getMessage().contains("unknown error")) {
+                Log.e(TAG, "POTENTIAL SOURCE OF 'UNKNOWN ERROR' MESSAGE IN MainActivity!", e);
+            }
+            throw e; // Re-throw to maintain original behavior
         }
     }
     

@@ -14,7 +14,7 @@ public class NetworkUtils {
     private boolean isConnected = false;
     private NetworkCallback networkCallback;
     
-    private NetworkUtils(Context context) {
+    public NetworkUtils(Context context) {
         this.context = context.getApplicationContext();
         this.connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         setupNetworkCallback();

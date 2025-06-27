@@ -5,6 +5,7 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.os.Build;
+import android.util.Log;
 
 import com.extrap.co.bizhub.data.AppDatabase;
 import com.extrap.co.bizhub.data.entities.Customer;
@@ -19,6 +20,7 @@ import java.util.concurrent.Executors;
 
 public class FieldServiceApp extends Application {
     
+    private static final String TAG = "FieldServiceApp";
     private static FieldServiceApp instance;
     private AppDatabase database;
     private PreferenceManager preferenceManager;
@@ -29,6 +31,9 @@ public class FieldServiceApp extends Application {
     public void onCreate() {
         super.onCreate();
         instance = this;
+        
+        // Set up global error handler
+        setupGlobalErrorHandler();
         
         // Initialize managers
         preferenceManager = new PreferenceManager(this);
@@ -46,6 +51,29 @@ public class FieldServiceApp extends Application {
         
         // Initialize network monitoring
         NetworkUtils.init(this);
+    }
+    
+    private void setupGlobalErrorHandler() {
+        Thread.setDefaultUncaughtExceptionHandler((thread, throwable) -> {
+            Log.e(TAG, "Uncaught exception in thread " + thread.getName(), throwable);
+            
+            // Log the full stack trace
+            StackTraceElement[] stackTrace = throwable.getStackTrace();
+            StringBuilder sb = new StringBuilder();
+            sb.append("Exception: ").append(throwable.getMessage()).append("\n");
+            sb.append("Stack trace:\n");
+            for (StackTraceElement element : stackTrace) {
+                sb.append("\tat ").append(element.toString()).append("\n");
+            }
+            Log.e(TAG, sb.toString());
+            
+            // Check if this might be the source of the "unknown error" message
+            if (throwable.getMessage() != null && 
+                (throwable.getMessage().contains("unknown error") || 
+                 throwable.getMessage().contains("refresh the page"))) {
+                Log.e(TAG, "POTENTIAL SOURCE OF 'UNKNOWN ERROR' MESSAGE FOUND!", throwable);
+            }
+        });
     }
     
     private void initializeSampleData() {

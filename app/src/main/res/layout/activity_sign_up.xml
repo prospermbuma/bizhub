@@ -164,6 +164,38 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
+            <!-- Security Question -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/security_question_layout"
+                style="@style/Widget.Bizhub.TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:hint="Security Question">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/security_question_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:maxLines="1" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Security Answer -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/security_answer_layout"
+                style="@style/Widget.Bizhub.TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:hint="Security Answer">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/security_answer_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:maxLines="1" />
+            </com.google.android.material.textfield.TextInputLayout>
+
             <!-- Sign Up Button -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/sign_up_button"

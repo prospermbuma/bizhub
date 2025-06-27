@@ -14,6 +14,7 @@ import androidx.appcompat.widget.Toolbar;
 import com.extrap.co.bizhub.FieldServiceApp;
 import com.extrap.co.bizhub.R;
 import com.extrap.co.bizhub.data.entities.User;
+import com.extrap.co.bizhub.utils.PasswordUtils;
 import com.extrap.co.bizhub.utils.PreferenceManager;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -29,6 +30,8 @@ public class SignUpActivity extends AppCompatActivity {
     private TextInputLayout phoneLayout;
     private TextInputLayout passwordLayout;
     private TextInputLayout confirmPasswordLayout;
+    private TextInputLayout securityQuestionLayout;
+    private TextInputLayout securityAnswerLayout;
     
     private TextInputEditText firstNameEditText;
     private TextInputEditText lastNameEditText;
@@ -36,6 +39,8 @@ public class SignUpActivity extends AppCompatActivity {
     private TextInputEditText phoneEditText;
     private TextInputEditText passwordEditText;
     private TextInputEditText confirmPasswordEditText;
+    private TextInputEditText securityQuestionEditText;
+    private TextInputEditText securityAnswerEditText;
     
     private Button signUpButton;
     private ProgressBar progressBar;
@@ -69,6 +74,8 @@ public class SignUpActivity extends AppCompatActivity {
         phoneLayout = findViewById(R.id.phone_layout);
         passwordLayout = findViewById(R.id.password_layout);
         confirmPasswordLayout = findViewById(R.id.confirm_password_layout);
+        securityQuestionLayout = findViewById(R.id.security_question_layout);
+        securityAnswerLayout = findViewById(R.id.security_answer_layout);
         
         firstNameEditText = findViewById(R.id.first_name_edit_text);
         lastNameEditText = findViewById(R.id.last_name_edit_text);
@@ -76,6 +83,8 @@ public class SignUpActivity extends AppCompatActivity {
         phoneEditText = findViewById(R.id.phone_edit_text);
         passwordEditText = findViewById(R.id.password_edit_text);
         confirmPasswordEditText = findViewById(R.id.confirm_password_edit_text);
+        securityQuestionEditText = findViewById(R.id.security_question_edit_text);
+        securityAnswerEditText = findViewById(R.id.security_answer_edit_text);
         
         signUpButton = findViewById(R.id.sign_up_button);
         progressBar = findViewById(R.id.progress_bar);
@@ -100,6 +109,8 @@ public class SignUpActivity extends AppCompatActivity {
         phoneLayout.setError(null);
         passwordLayout.setError(null);
         confirmPasswordLayout.setError(null);
+        securityQuestionLayout.setError(null);
+        securityAnswerLayout.setError(null);
         
         // Get values
         String firstName = firstNameEditText.getText().toString().trim();
@@ -108,6 +119,8 @@ public class SignUpActivity extends AppCompatActivity {
         String phone = phoneEditText.getText().toString().trim();
         String password = passwordEditText.getText().toString().trim();
         String confirmPassword = confirmPasswordEditText.getText().toString().trim();
+        String securityQuestion = securityQuestionEditText.getText().toString().trim();
+        String securityAnswer = securityAnswerEditText.getText().toString().trim();
         
         // Validate input
         if (TextUtils.isEmpty(firstName)) {
@@ -158,6 +171,18 @@ public class SignUpActivity extends AppCompatActivity {
             return;
         }
         
+        if (TextUtils.isEmpty(securityQuestion)) {
+            securityQuestionLayout.setError("Security question is required");
+            securityQuestionEditText.requestFocus();
+            return;
+        }
+        
+        if (TextUtils.isEmpty(securityAnswer)) {
+            securityAnswerLayout.setError("Security answer is required");
+            securityAnswerEditText.requestFocus();
+            return;
+        }
+        
         // Show progress
         showProgress(true);
         
@@ -172,15 +197,18 @@ public class SignUpActivity extends AppCompatActivity {
                     emailEditText.requestFocus();
                 } else {
                     // Create new user
-                    createUser(firstName, lastName, email, phone, password);
+                    createUser(firstName, lastName, email, phone, password, securityQuestion, securityAnswer);
                 }
             });
         });
     }
     
-    private void createUser(String firstName, String lastName, String email, String phone, String password) {
+    private void createUser(String firstName, String lastName, String email, String phone, String password, String securityQuestion, String securityAnswer) {
         executorService.execute(() -> {
-            User newUser = new User(email, password, firstName, lastName, phone, "technician");
+            String hashedPassword = PasswordUtils.hashPassword(password);
+            User newUser = new User(email, hashedPassword, firstName, lastName, phone, "technician");
+            newUser.setSecurityQuestion(securityQuestion);
+            newUser.setSecurityAnswer(securityAnswer);
             long userId = FieldServiceApp.getInstance().getDatabase().userDao().insertUser(newUser);
             
             runOnUiThread(() -> {
