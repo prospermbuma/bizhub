@@ -34,9 +34,6 @@
         
         <!-- Custom attributes -->
         <item name="colorError">@color/error</item>
-        <item name="colorSuccess">@color/success</item>
-        <item name="colorWarning">@color/warning</item>
-        <item name="colorInfo">@color/info</item>
     </style>
 
     <!-- Splash screen theme -->
@@ -60,6 +57,15 @@
         <item name="strokeColor">@color/primary</item>
         <item name="cornerRadius">8dp</item>
         <item name="android:minHeight">56dp</item>
+    </style>
+
+    <style name="Widget.Bizhub.Button.Outlined" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="android:textColor">@color/primary</item>
+        <item name="strokeColor">@color/primary</item>
+        <item name="cornerRadius">8dp</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <!-- Text Input styles -->
@@ -144,7 +150,7 @@
     </style>
 
     <!-- Progress bar styles -->
-    <style name="Widget.Bizhub.ProgressBar" parent="Widget.Material3.ProgressBar">
+    <style name="Widget.Bizhub.ProgressBar" parent="Widget.Material3.CircularProgressIndicator">
         <item name="android:progressTint">@color/primary</item>
         <item name="android:indeterminateTint">@color/primary</item>
     </style>

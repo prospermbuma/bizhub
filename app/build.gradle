@@ -4,7 +4,7 @@ plugins {
 
 android {
     namespace 'com.extrap.co.bizhub'
-    compileSdk 34
+    compileSdk 35
 
     defaultConfig {
         applicationId "com.extrap.co.bizhub"

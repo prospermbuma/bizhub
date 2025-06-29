@@ -83,4 +83,9 @@
     <!-- Settings Colors -->
     <color name="background_light">#FAFAFA</color>
     <color name="ripple">#1F000000</color>
+    
+    <!-- New Colors -->
+    <color name="colorSuccess">#4CAF50</color>
+    <color name="colorWarning">#FFC107</color>
+    <color name="colorInfo">#2196F3</color>
 </resources>

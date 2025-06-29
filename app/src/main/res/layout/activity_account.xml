@@ -33,7 +33,6 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/circle_background"
-                android:src="@drawable/ic_person"
                 android:padding="20dp"
                 android:tint="@color/white"
                 android:contentDescription="Profile Picture" />
@@ -44,8 +43,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
                 android:hint="@string/first_name"
-                style="@style/Widget.Bizhub.TextInputLayout"
-                app:startIconDrawable="@drawable/ic_person">
+                style="@style/Widget.Bizhub.TextInputLayout">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/first_name_edit_text"
@@ -62,8 +60,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:hint="@string/last_name"
-                style="@style/Widget.Bizhub.TextInputLayout"
-                app:startIconDrawable="@drawable/ic_person">
+                style="@style/Widget.Bizhub.TextInputLayout">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/last_name_edit_text"
