@@ -70,7 +70,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="Member since December 2024"
+                android:text=""
                 android:textColor="@color/text_secondary"
                 android:textSize="12sp" />
 

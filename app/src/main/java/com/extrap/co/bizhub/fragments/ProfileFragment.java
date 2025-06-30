@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -170,21 +171,55 @@ public class ProfileFragment extends Fragment {
         String userName = preferenceManager.getUserName();
         String userEmail = preferenceManager.getUserEmail();
         String userRole = preferenceManager.getUserRole();
+        long userId = preferenceManager.getUserId();
+        
+        Log.d("ProfileFragment", "Loading profile for user ID: " + userId);
+        Log.d("ProfileFragment", "User name from preferences: " + userName);
+        Log.d("ProfileFragment", "User email from preferences: " + userEmail);
+        Log.d("ProfileFragment", "User role from preferences: " + userRole);
         
         userNameText.setText(userName);
         userEmailText.setText(userEmail);
         userRoleText.setText(userRole.substring(0, 1).toUpperCase() + userRole.substring(1));
-        joinDateText.setText("Member since December 2024"); // TODO: Get actual join date
         
         // Load user data from database
         viewModel.getCurrentUser().observe(getViewLifecycleOwner(), user -> {
             if (user != null) {
+                Log.d("ProfileFragment", "User loaded from database: " + user.getFullName());
+                Log.d("ProfileFragment", "User creation timestamp: " + user.getCreatedAt());
+                
                 firstNameEditText.setText(user.getFirstName());
                 lastNameEditText.setText(user.getLastName());
                 emailEditText.setText(user.getEmail());
                 phoneEditText.setText(user.getPhone());
+                
+                // Format and display the actual join date
+                if (user.getCreatedAt() > 0) {
+                    String joinDate = formatJoinDate(user.getCreatedAt());
+                    joinDateText.setText("Member since " + joinDate);
+                    Log.d("ProfileFragment", "Set join date to: Member since " + joinDate);
+                } else {
+                    joinDateText.setText("Member since December 2024"); // Fallback
+                    Log.w("ProfileFragment", "User has no creation timestamp, using fallback");
+                }
+            } else {
+                Log.w("ProfileFragment", "No user data loaded from database");
             }
         });
+    }
+    
+    private String formatJoinDate(long timestamp) {
+        try {
+            Log.d("ProfileFragment", "Formatting join date for timestamp: " + timestamp);
+            java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("MMMM yyyy", java.util.Locale.getDefault());
+            String formattedDate = sdf.format(new java.util.Date(timestamp));
+            Log.d("ProfileFragment", "Formatted join date: " + formattedDate);
+            return formattedDate;
+        } catch (Exception e) {
+            Log.e("ProfileFragment", "Error formatting join date", e);
+            // Fallback to a simple format
+            return "December 2024";
+        }
     }
     
     private void enableEditMode() {
