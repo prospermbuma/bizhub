@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Switch;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -22,6 +21,7 @@ import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.slider.RangeSlider;
 import com.google.android.material.slider.Slider;
+import com.google.android.material.switchmaterial.SwitchMaterial;
 
 public class SettingsFragment extends Fragment {
     
@@ -29,31 +29,31 @@ public class SettingsFragment extends Fragment {
     private PreferenceManager preferenceManager;
     
     // Notification Settings
-    private Switch pushNotificationsSwitch;
-    private Switch emailNotificationsSwitch;
-    private Switch smsNotificationsSwitch;
-    private Switch soundNotificationsSwitch;
-    private Switch vibrationNotificationsSwitch;
+    private SwitchMaterial pushNotificationsSwitch;
+    private SwitchMaterial emailNotificationsSwitch;
+    private SwitchMaterial smsNotificationsSwitch;
+    private SwitchMaterial soundNotificationsSwitch;
+    private SwitchMaterial vibrationNotificationsSwitch;
     
     // Sync Settings
-    private Switch autoSyncSwitch;
-    private Switch wifiOnlySyncSwitch;
-    private Switch backgroundSyncSwitch;
+    private SwitchMaterial autoSyncSwitch;
+    private SwitchMaterial wifiOnlySyncSwitch;
+    private SwitchMaterial backgroundSyncSwitch;
     
     // Location Settings
-    private Switch locationTrackingSwitch;
-    private Switch gpsTrackingSwitch;
-    private Switch locationHistorySwitch;
+    private SwitchMaterial locationTrackingSwitch;
+    private SwitchMaterial gpsTrackingSwitch;
+    private SwitchMaterial locationHistorySwitch;
     
     // Privacy Settings
-    private Switch dataCollectionSwitch;
-    private Switch analyticsSwitch;
-    private Switch crashReportingSwitch;
+    private SwitchMaterial dataCollectionSwitch;
+    private SwitchMaterial analyticsSwitch;
+    private SwitchMaterial crashReportingSwitch;
     
     // App Settings
-    private Switch darkModeSwitch;
-    private Switch autoBackupSwitch;
-    private Switch offlineModeSwitch;
+    private SwitchMaterial darkModeSwitch;
+    private SwitchMaterial autoBackupSwitch;
+    private SwitchMaterial offlineModeSwitch;
     
     // About Section
     private MaterialCardView aboutCard;

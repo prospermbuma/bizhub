@@ -108,7 +108,17 @@ public class ReportActivity extends AppCompatActivity {
             tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
                 @Override
                 public void onTabSelected(TabLayout.Tab tab) {
-                    loadReportForTab(tab.getPosition());
+                    switch (tab.getPosition()) {
+                        case 0: // Daily
+                            viewModel.updatePeriod("daily");
+                            break;
+                        case 1: // Weekly
+                            viewModel.updatePeriod("weekly");
+                            break;
+                        case 2: // Monthly
+                            viewModel.updatePeriod("monthly");
+                            break;
+                    }
                 }
                 
                 @Override
@@ -124,15 +134,19 @@ public class ReportActivity extends AppCompatActivity {
     
     private void setupRecyclerView() {
         try {
-            workOrderAdapter = new WorkOrderAdapter(new ArrayList<>(), workOrder -> {
+            // Initialize RecyclerView
+            RecyclerView recyclerView = findViewById(R.id.work_orders_recycler_view);
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+            
+            // Initialize adapter with correct constructor
+            workOrderAdapter = new WorkOrderAdapter(new ArrayList<>());
+            workOrderAdapter.setOnItemClickListener(workOrder -> {
                 // Handle work order click
-                Intent intent = new Intent(ReportActivity.this, WorkOrderDetailsActivity.class);
-                intent.putExtra("work_order_id", workOrder.getId());
-                startActivity(intent);
+                Log.d(TAG, "Work order clicked: " + workOrder.getWorkOrderNumber());
+                // TODO: Navigate to work order details
             });
             
-            workOrdersRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-            workOrdersRecyclerView.setAdapter(workOrderAdapter);
+            recyclerView.setAdapter(workOrderAdapter);
         } catch (Exception e) {
             Log.e(TAG, "Error setting up recycler view", e);
         }
@@ -140,26 +154,18 @@ public class ReportActivity extends AppCompatActivity {
     
     private void setupClickListeners() {
         try {
-            // Daily report card
-            if (dailyReportCard != null) {
-                dailyReportCard.setOnClickListener(v -> {
-                    tabLayout.selectTab(tabLayout.getTabAt(0));
-                });
-            }
+            // Set up report card click listeners
+            findViewById(R.id.daily_report_card).setOnClickListener(v -> {
+                viewModel.updatePeriod("daily");
+            });
             
-            // Weekly report card
-            if (weeklyReportCard != null) {
-                weeklyReportCard.setOnClickListener(v -> {
-                    tabLayout.selectTab(tabLayout.getTabAt(1));
-                });
-            }
+            findViewById(R.id.weekly_report_card).setOnClickListener(v -> {
+                viewModel.updatePeriod("weekly");
+            });
             
-            // Monthly report card
-            if (monthlyReportCard != null) {
-                monthlyReportCard.setOnClickListener(v -> {
-                    tabLayout.selectTab(tabLayout.getTabAt(2));
-                });
-            }
+            findViewById(R.id.monthly_report_card).setOnClickListener(v -> {
+                viewModel.updatePeriod("monthly");
+            });
             
             Log.d(TAG, "Click listeners setup successfully");
         } catch (Exception e) {
@@ -167,44 +173,35 @@ public class ReportActivity extends AppCompatActivity {
         }
     }
     
-    private void loadReportForTab(int position) {
-        try {
-            switch (position) {
-                case 0: // Daily
-                    viewModel.loadDailyReport();
-                    break;
-                case 1: // Weekly
-                    viewModel.loadWeeklyReport();
-                    break;
-                case 2: // Monthly
-                    viewModel.loadMonthlyReport();
-                    break;
-            }
-        } catch (Exception e) {
-            Log.e(TAG, "Error loading report for tab", e);
-        }
-    }
-    
     private void observeData() {
         try {
-            // Observe work orders
-            viewModel.getWorkOrders().observe(this, workOrders -> {
-                if (workOrders != null) {
-                    workOrderAdapter.updateWorkOrders(workOrders);
+            // Observe data changes
+            viewModel.getTotalWorkOrders().observe(this, total -> {
+                if (total != null) {
+                    Log.d(TAG, "Total work orders: " + total);
+                    // TODO: Update UI with total work orders
                 }
             });
             
-            // Observe report stats
-            viewModel.getRevenue().observe(this, revenue -> {
-                // Update revenue display
+            viewModel.getTotalRevenue().observe(this, revenue -> {
+                if (revenue != null) {
+                    Log.d(TAG, "Total revenue: " + revenue);
+                    // TODO: Update UI with revenue
+                }
             });
             
-            viewModel.getJobsCompleted().observe(this, jobsCompleted -> {
-                // Update jobs completed display
+            viewModel.getCompletedWorkOrders().observe(this, completed -> {
+                if (completed != null) {
+                    Log.d(TAG, "Completed work orders: " + completed);
+                    // TODO: Update UI with completed work orders
+                }
             });
             
-            viewModel.getCustomerSatisfaction().observe(this, satisfaction -> {
-                // Update customer satisfaction display
+            viewModel.getTotalCustomers().observe(this, customers -> {
+                if (customers != null) {
+                    Log.d(TAG, "Total customers: " + customers);
+                    // TODO: Update UI with customer count
+                }
             });
         } catch (Exception e) {
             Log.e(TAG, "Error observing data", e);

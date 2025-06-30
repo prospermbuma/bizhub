@@ -95,13 +95,31 @@ public class CustomerActivity extends AppCompatActivity {
     
     private void setupRecyclerView() {
         try {
-            customerAdapter = new CustomerAdapter(new ArrayList<>(), customer -> {
-                // Handle customer click - show customer details
-                showCustomerDetails(customer);
-            });
+            // Initialize RecyclerView
+            RecyclerView recyclerView = findViewById(R.id.customers_recycler_view);
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
             
-            customersRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-            customersRecyclerView.setAdapter(customerAdapter);
+            // Initialize adapter with correct constructor
+            customerAdapter = new CustomerAdapter(
+                new ArrayList<>(),
+                customer -> {
+                    // Handle customer click
+                    Log.d(TAG, "Customer clicked: " + customer.getName());
+                    // TODO: Navigate to customer details
+                },
+                customer -> {
+                    // Handle customer edit
+                    Log.d(TAG, "Edit customer: " + customer.getName());
+                    // TODO: Navigate to edit customer
+                },
+                customer -> {
+                    // Handle customer delete
+                    Log.d(TAG, "Delete customer: " + customer.getName());
+                    showDeleteConfirmationDialog(customer);
+                }
+            );
+            
+            recyclerView.setAdapter(customerAdapter);
         } catch (Exception e) {
             Log.e(TAG, "Error setting up recycler view", e);
         }
@@ -143,37 +161,50 @@ public class CustomerActivity extends AppCompatActivity {
     
     private void observeData() {
         try {
-            // Observe customers
-            viewModel.getCustomers().observe(this, customers -> {
+            // Observe data changes
+            viewModel.getAllCustomers().observe(this, customers -> {
                 if (customers != null) {
                     customerAdapter.updateCustomers(customers);
-                    
-                    // Show/hide empty state
-                    if (customers.isEmpty()) {
-                        if (emptyStateText != null) emptyStateText.setVisibility(View.VISIBLE);
-                        if (customersRecyclerView != null) customersRecyclerView.setVisibility(View.GONE);
-                    } else {
-                        if (emptyStateText != null) emptyStateText.setVisibility(View.GONE);
-                        if (customersRecyclerView != null) customersRecyclerView.setVisibility(View.VISIBLE);
-                    }
+                    updateEmptyState(customers.isEmpty());
                 }
             });
             
-            // Observe loading state
-            viewModel.isLoading().observe(this, isLoading -> {
-                // TODO: Show/hide loading indicator
+            viewModel.getErrorMessage().observe(this, error -> {
+                if (error != null && !error.isEmpty()) {
+                    showError(error);
+                }
             });
             
-            // Observe error state
-            viewModel.getError().observe(this, error -> {
-                if (error != null) {
-                    Log.e(TAG, "Error loading customers: " + error);
-                    // TODO: Show error message to user
+            viewModel.getSuccessMessage().observe(this, message -> {
+                if (message != null && !message.isEmpty()) {
+                    showSuccess(message);
                 }
             });
         } catch (Exception e) {
             Log.e(TAG, "Error observing data", e);
         }
+    }
+    
+    private void updateEmptyState(boolean isEmpty) {
+        if (emptyStateText != null) {
+            emptyStateText.setVisibility(isEmpty ? View.VISIBLE : View.GONE);
+            customersRecyclerView.setVisibility(isEmpty ? View.GONE : View.VISIBLE);
+        }
+    }
+    
+    private void showError(String error) {
+        // TODO: Implement error handling logic
+        Log.e(TAG, "Error loading customers: " + error);
+    }
+    
+    private void showSuccess(String message) {
+        // TODO: Implement success handling logic
+        Log.d(TAG, "Customers loaded successfully: " + message);
+    }
+    
+    private void showDeleteConfirmationDialog(Customer customer) {
+        // TODO: Implement delete confirmation dialog
+        Log.d(TAG, "Delete confirmation dialog not implemented");
     }
     
     @Override
