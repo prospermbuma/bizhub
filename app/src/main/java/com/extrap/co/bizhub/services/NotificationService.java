@@ -78,7 +78,7 @@ public class NotificationService extends Service {
     private void checkOverdueWorkOrders() {
         try {
             long currentTime = System.currentTimeMillis();
-            List<WorkOrder> overdueWorkOrders = workOrderDao.getOverdueWorkOrders(currentTime);
+            List<WorkOrder> overdueWorkOrders = workOrderDao.getOverdueWorkOrdersSync(currentTime);
             
             for (WorkOrder workOrder : overdueWorkOrders) {
                 notificationManager.showOverdueWorkOrderAlert(workOrder);
@@ -98,7 +98,7 @@ public class NotificationService extends Service {
             long startOfDay = getStartOfDay(currentTime);
             long endOfDay = getEndOfDay(currentTime);
             
-            List<WorkOrder> scheduledWorkOrders = workOrderDao.getWorkOrdersByDateRange(startOfDay, endOfDay);
+            List<WorkOrder> scheduledWorkOrders = workOrderDao.getWorkOrdersByDateRangeSync(startOfDay, endOfDay);
             
             for (WorkOrder workOrder : scheduledWorkOrders) {
                 if ("pending".equals(workOrder.getStatus())) {

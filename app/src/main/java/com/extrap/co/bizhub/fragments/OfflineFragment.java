@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.extrap.co.bizhub.R;
 import com.extrap.co.bizhub.services.SyncService;
+import com.extrap.co.bizhub.FieldServiceApp;
 import com.extrap.co.bizhub.utils.NetworkUtils;
 import com.extrap.co.bizhub.utils.OfflineManager;
 import com.extrap.co.bizhub.utils.PreferenceManager;

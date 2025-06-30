@@ -12,9 +12,7 @@
     <string name="feedback">Feedback</string>
     <string name="complaints">Complaints</string>
     <string name="privacy_policy">Privacy Policy</string>
-    <string name="logout">Logout</string>
     <string name="support">Support</string>
-    <string name="actions">Actions</string>
     <string name="map">Map</string>
     <string name="profile">Profile</string>
     
@@ -32,7 +30,6 @@
     <string name="error_field_required">This field is required</string>
     <string name="error_invalid_email">Invalid email address</string>
     <string name="save_changes">Save Changes</string>
-    <string name="submit_feedback">Submit Feedback</string>
     <string name="feedback_hint">Tell us about your experience...</string>
     
     <!-- Navigation Drawer -->
@@ -104,20 +101,14 @@
     <string name="about_app">About App</string>
     <string name="version">Version %1$s</string>
     
-    <!-- Account -->
-    <string name="change_password">Change Password</string>
-    <string name="edit_profile">Edit Profile</string>
 
     <!-- Feedback -->
     <string name="rate_app">Rate App</string>
-    <string name="send_feedback">Send Feedback</string>
-    
+
     <!-- Complaints -->
-    <string name="new_complaint">New Complaint</string>
     <string name="complaint_title">Complaint Title</string>
     <string name="complaint_description">Describe the issue...</string>
-    <string name="submit_complaint">Submit Complaint</string>
-    
+
     <!-- Help -->
     <string name="help">Help</string>
     <string name="faq">Frequently Asked Questions</string>
@@ -203,4 +194,84 @@
     <!-- New resource -->
     <string name="no_account">Don\'t have an account?</string>
     
+    <!-- Hardware Activity -->
+    <string name="bluetooth_devices">Bluetooth Devices</string>
+    <string name="scan_for_devices">Scan for Devices</string>
+    <string name="rfid_scanner">RFID Scanner</string>
+    <string name="scan_rfid_tag">Scan RFID Tag</string>
+    <string name="no_rfid_tag_scanned">No RFID tag scanned</string>
+    <string name="barcode_scanner">Barcode Scanner</string>
+    <string name="scan_barcode">Scan Barcode</string>
+    <string name="no_barcode_scanned">No barcode scanned</string>
+    <string name="printer">Printer</string>
+    <string name="print_test_page">Print Test Page</string>
+    <string name="printer_not_connected">Printer not connected</string>
+
+    <!-- Camera Activity -->
+    <string name="camera_ready">Camera ready</string>
+    <string name="gallery">Gallery</string>
+    <string name="capture">Capture</string>
+    <string name="switch_camera">Switch Camera</string>
+
+    <!-- Analytics Activity -->
+    <string name="work_order_analytics">Work Order Analytics</string>
+    <string name="performance_metrics">Performance Metrics</string>
+    <string name="revenue_trends">Revenue Trends</string>
+    <string name="export">Export</string>
+
+    <!-- Testing Activity -->
+    <string name="database_testing">Database Testing</string>
+    <string name="test_database_operations">Test Database Operations</string>
+    <string name="clear_database">Clear Database</string>
+    <string name="database_status_ready">Database status: Ready</string>
+    <string name="network_testing">Network Testing</string>
+    <string name="test_network_connection">Test Network Connection</string>
+    <string name="test_data_sync">Test Data Sync</string>
+    <string name="network_status_unknown">Network status: Unknown</string>
+    <string name="hardware_testing">Hardware Testing</string>
+    <string name="test_camera">Test Camera</string>
+    <string name="test_gps">Test GPS</string>
+    <string name="test_bluetooth">Test Bluetooth</string>
+    <string name="hardware_status_ready">Hardware status: Ready</string>
+    <string name="performance_testing">Performance Testing</string>
+    <string name="run_performance_test">Run Performance Test</string>
+    <string name="clear_app_cache">Clear App Cache</string>
+    <string name="performance_status_ready">Performance status: Ready</string>
+
+    <!-- User Feedback Activity -->
+    <string name="send_feedback">Send Feedback</string>
+    <string name="subject">Subject</string>
+    <string name="your_feedback">Your feedback</string>
+    <string name="your_email_optional">Your email (optional)</string>
+    <string name="submit_feedback">Submit Feedback</string>
+    <string name="rate_the_app">Rate the App</string>
+    <string name="submit_rating">Submit Rating</string>
+    <string name="contact_information">Contact Information</string>
+    <string name="support_email_address">support@bizhub.com</string>
+    <string name="support_phone_number">+1 (555) 123-4567</string>
+    <string name="office_address_short">123 Business St, Suite 100</string>
+
+    <!-- Complaints Activity -->
+    <string name="new_complaint">New Complaint</string>
+    <string name="complaint_type">Complaint Type</string>
+    <string name="description_hint">Description</string>
+    <string name="priority_hint">Priority</string>
+    <string name="submit_complaint">Submit Complaint</string>
+    <string name="recent_complaints">Recent Complaints</string>
+
+    <!-- Account Activity -->
+    <string name="profile_information">Profile Information</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="account_settings">Account Settings</string>
+    <string name="notifications_setting">Notifications</string>
+    <string name="auto_sync">Auto Sync</string>
+    <string name="location_services">Location Services</string>
+    <string name="security">Security</string>
+    <string name="change_password">Change Password</string>
+    <string name="two_factor_authentication">Two-Factor Authentication</string>
+    <string name="actions">Actions</string>
+    <string name="export_data">Export Data</string>
+    <string name="clear_all_data">Clear All Data</string>
+    <string name="logout">Logout</string>
+
 </resources>

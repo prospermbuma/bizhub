@@ -161,4 +161,17 @@
         <item name="android:textColor">@color/white</item>
     </style>
 
+    <!-- SearchView styles -->
+    <style name="SearchViewStyle" parent="Widget.Material3.SearchView">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textColorHint">@color/text_hint</item>
+        <item name="queryBackground">@android:color/transparent</item>
+    </style>
+
+    <!-- AppBar Overlay styles -->
+    <style name="Theme.Bizhub.AppBarOverlay" parent="ThemeOverlay.Material3.Dark.ActionBar" />
+
+    <style name="Theme.Bizhub.PopupOverlay" parent="ThemeOverlay.Material3.Light" />
+
 </resources>

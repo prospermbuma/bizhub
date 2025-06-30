@@ -1,6 +1,7 @@
 package com.extrap.co.bizhub.data.entities;
 
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "work_orders")
@@ -38,6 +39,7 @@ public class WorkOrder {
     // Constructors
     public WorkOrder() {}
     
+    @Ignore
     public WorkOrder(String workOrderNumber, int customerId, String serviceType, String priority, String description) {
         this.workOrderNumber = workOrderNumber;
         this.customerId = customerId;
@@ -45,6 +47,21 @@ public class WorkOrder {
         this.priority = priority;
         this.description = description;
         this.status = "pending";
+        this.createdAt = System.currentTimeMillis();
+        this.updatedAt = System.currentTimeMillis();
+    }
+    
+    @Ignore
+    public WorkOrder(String workOrderNumber, long customerId, String serviceType, String description, String priority, String status, long scheduledDate, long dueDate, long assignedTechnicianId) {
+        this.workOrderNumber = workOrderNumber;
+        this.customerId = (int) customerId;
+        this.serviceType = serviceType;
+        this.description = description;
+        this.priority = priority;
+        this.status = status;
+        this.scheduledDate = scheduledDate;
+        this.dueDate = dueDate;
+        this.assignedTechnicianId = (int) assignedTechnicianId;
         this.createdAt = System.currentTimeMillis();
         this.updatedAt = System.currentTimeMillis();
     }
@@ -284,6 +301,20 @@ public class WorkOrder {
     }
     
     public boolean isHighPriority() {
-        return priority.equals("high") || priority.equals("urgent");
+        return "high".equals(priority) || "urgent".equals(priority);
+    }
+
+    // Additional methods for compatibility
+    public String getCustomerName() {
+        // This would typically be populated from a join query
+        return "Customer " + customerId;
+    }
+
+    public void setCustomerName(String customerName) {
+        // This is a placeholder - in a real app, you'd update the customer relationship
+    }
+
+    public void setAssignedTo(long assignedTo) {
+        this.assignedTechnicianId = (int) assignedTo;
     }
 } 

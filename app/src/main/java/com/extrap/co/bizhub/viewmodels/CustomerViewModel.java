@@ -19,6 +19,7 @@ public class CustomerViewModel extends AndroidViewModel {
     private CustomerDao customerDao;
     private ExecutorService executorService;
     
+    private MutableLiveData<List<Customer>> customers = new MutableLiveData<>();
     private MutableLiveData<List<Customer>> searchResults = new MutableLiveData<>();
     private MutableLiveData<String> errorMessage = new MutableLiveData<>();
     private MutableLiveData<String> successMessage = new MutableLiveData<>();
@@ -48,10 +49,10 @@ public class CustomerViewModel extends AndroidViewModel {
     public void searchCustomers(String query) {
         executorService.execute(() -> {
             try {
-                List<Customer> results = customerDao.searchCustomers("%" + query + "%");
+                List<Customer> results = customerDao.searchCustomersSync("%" + query + "%");
                 searchResults.postValue(results);
             } catch (Exception e) {
-                errorMessage.postValue("Search failed: " + e.getMessage());
+                errorMessage.postValue("Error searching customers: " + e.getMessage());
             }
         });
     }
@@ -70,10 +71,10 @@ public class CustomerViewModel extends AndroidViewModel {
     public void filterCustomersByType(boolean isPremium) {
         executorService.execute(() -> {
             try {
-                List<Customer> results = customerDao.getCustomersByType(isPremium);
+                List<Customer> results = customerDao.getCustomersByTypeSync(isPremium);
                 searchResults.postValue(results);
             } catch (Exception e) {
-                errorMessage.postValue("Filter failed: " + e.getMessage());
+                errorMessage.postValue("Error getting customers by type: " + e.getMessage());
             }
         });
     }
@@ -93,12 +94,23 @@ public class CustomerViewModel extends AndroidViewModel {
         });
     }
     
+    public void loadCustomers() {
+        executorService.execute(() -> {
+            try {
+                List<Customer> customers = customerDao.getAllCustomersSync();
+                this.customers.postValue(customers);
+            } catch (Exception e) {
+                errorMessage.postValue("Error loading customers: " + e.getMessage());
+            }
+        });
+    }
+    
     public void updateCustomer(Customer customer) {
         executorService.execute(() -> {
             try {
                 int rowsUpdated = customerDao.updateCustomer(customer);
                 if (rowsUpdated > 0) {
-                    successMessage.postValue("Customer updated successfully");
+                    loadCustomers();
                 } else {
                     errorMessage.postValue("Failed to update customer");
                 }
@@ -113,7 +125,7 @@ public class CustomerViewModel extends AndroidViewModel {
             try {
                 int rowsDeleted = customerDao.deleteCustomer(customer);
                 if (rowsDeleted > 0) {
-                    successMessage.postValue("Customer deleted successfully");
+                    loadCustomers();
                 } else {
                     errorMessage.postValue("Failed to delete customer");
                 }
@@ -184,7 +196,16 @@ public class CustomerViewModel extends AndroidViewModel {
     }
     
     public LiveData<List<Customer>> getActiveCustomers() {
-        return customerDao.getCustomersByStatus(true);
+        MutableLiveData<List<Customer>> activeCustomers = new MutableLiveData<>();
+        executorService.execute(() -> {
+            try {
+                List<Customer> customers = customerDao.getCustomersByStatus(true);
+                activeCustomers.postValue(customers);
+            } catch (Exception e) {
+                errorMessage.postValue("Error getting active customers: " + e.getMessage());
+            }
+        });
+        return activeCustomers;
     }
     
     public LiveData<List<Customer>> getPremiumCustomers() {
@@ -196,11 +217,24 @@ public class CustomerViewModel extends AndroidViewModel {
     }
     
     public LiveData<Integer> getActiveCustomerCount() {
-        return customerDao.getActiveCustomerCount();
+        MutableLiveData<Integer> count = new MutableLiveData<>();
+        executorService.execute(() -> {
+            try {
+                int activeCount = customerDao.getActiveCustomerCount();
+                count.postValue(activeCount);
+            } catch (Exception e) {
+                errorMessage.postValue("Error getting active customer count: " + e.getMessage());
+            }
+        });
+        return count;
     }
     
     public LiveData<Integer> getPremiumCustomerCount() {
         return customerDao.getPremiumCustomerCount();
+    }
+    
+    public Customer getCustomerByIdSync(long id) {
+        return customerDao.getCustomerByIdSync((int) id);
     }
     
     @Override

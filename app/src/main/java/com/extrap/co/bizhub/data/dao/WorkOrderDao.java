@@ -30,6 +30,9 @@ public interface WorkOrderDao {
     @Query("SELECT * FROM work_orders WHERE id = :workOrderId")
     WorkOrder getWorkOrderByIdSync(int workOrderId);
     
+    @Query("SELECT * FROM work_orders WHERE id = :workOrderId")
+    WorkOrder getWorkOrderById(long workOrderId);
+    
     @Query("SELECT * FROM work_orders WHERE workOrderNumber = :workOrderNumber")
     WorkOrder getWorkOrderByNumber(String workOrderNumber);
     
@@ -42,17 +45,26 @@ public interface WorkOrderDao {
     @Query("SELECT * FROM work_orders WHERE status = :status")
     LiveData<List<WorkOrder>> getWorkOrdersByStatus(String status);
     
+    @Query("SELECT * FROM work_orders WHERE status = :status")
+    List<WorkOrder> getWorkOrdersByStatusSync(String status);
+    
     @Query("SELECT * FROM work_orders WHERE priority = :priority")
     LiveData<List<WorkOrder>> getWorkOrdersByPriority(String priority);
     
-    @Query("SELECT * FROM work_orders WHERE serviceType = :serviceType")
-    LiveData<List<WorkOrder>> getWorkOrdersByServiceType(String serviceType);
+    @Query("SELECT * FROM work_orders WHERE priority = :priority")
+    List<WorkOrder> getWorkOrdersByPrioritySync(String priority);
     
     @Query("SELECT * FROM work_orders WHERE scheduledDate >= :startDate AND scheduledDate <= :endDate")
     LiveData<List<WorkOrder>> getWorkOrdersByDateRange(long startDate, long endDate);
     
+    @Query("SELECT * FROM work_orders WHERE scheduledDate >= :startDate AND scheduledDate <= :endDate")
+    List<WorkOrder> getWorkOrdersByDateRangeSync(long startDate, long endDate);
+    
     @Query("SELECT * FROM work_orders WHERE dueDate < :currentTime AND status != 'completed'")
     LiveData<List<WorkOrder>> getOverdueWorkOrders(long currentTime);
+    
+    @Query("SELECT * FROM work_orders WHERE dueDate < :currentTime AND status != 'completed'")
+    List<WorkOrder> getOverdueWorkOrdersSync(long currentTime);
     
     @Query("SELECT * FROM work_orders WHERE status = 'pending' ORDER BY priority DESC, scheduledDate ASC")
     LiveData<List<WorkOrder>> getPendingWorkOrders();
@@ -96,22 +108,16 @@ public interface WorkOrderDao {
     @Query("SELECT * FROM work_orders WHERE assignedTechnicianId = :technicianId AND status = 'in_progress'")
     LiveData<List<WorkOrder>> getInProgressWorkOrdersForTechnician(int technicianId);
     
-    @Query("SELECT * FROM work_orders WHERE status = :status ORDER BY created_at DESC")
-    List<WorkOrder> getWorkOrdersByStatus(String status);
-    
-    @Query("SELECT * FROM work_orders WHERE created_at BETWEEN :startDate AND :endDate ORDER BY created_at DESC")
-    List<WorkOrder> getWorkOrdersByDateRange(long startDate, long endDate);
-    
-    @Query("SELECT * FROM work_orders WHERE status = :status AND created_at BETWEEN :startDate AND :endDate ORDER BY created_at DESC")
+    @Query("SELECT * FROM work_orders WHERE status = :status AND createdAt BETWEEN :startDate AND :endDate ORDER BY createdAt DESC")
     List<WorkOrder> getWorkOrdersByStatusAndDate(String status, long startDate, long endDate);
     
-    @Query("SELECT * FROM work_orders ORDER BY created_at DESC LIMIT :limit")
+    @Query("SELECT * FROM work_orders ORDER BY createdAt DESC LIMIT :limit")
     List<WorkOrder> getRecentWorkOrders(int limit);
     
-    @Query("SELECT * FROM work_orders WHERE assigned_to = :userId ORDER BY created_at DESC")
+    @Query("SELECT * FROM work_orders WHERE assignedTechnicianId = :userId ORDER BY createdAt DESC")
     List<WorkOrder> getWorkOrdersByUser(long userId);
     
-    @Query("SELECT * FROM work_orders WHERE customer_id = :customerId ORDER BY created_at DESC")
+    @Query("SELECT * FROM work_orders WHERE customerId = :customerId ORDER BY createdAt DESC")
     List<WorkOrder> getWorkOrdersByCustomer(long customerId);
     
     @Query("DELETE FROM work_orders WHERE id = :id")

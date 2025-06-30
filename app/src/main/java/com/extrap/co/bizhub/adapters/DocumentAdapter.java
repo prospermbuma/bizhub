@@ -26,7 +26,7 @@ public class DocumentAdapter extends RecyclerView.Adapter<DocumentAdapter.Docume
     }
     
     public interface OnItemLongClickListener {
-        void onItemLongClick(Document document);
+        boolean onItemLongClick(Document document);
     }
     
     public DocumentAdapter() {
@@ -90,8 +90,7 @@ public class DocumentAdapter extends RecyclerView.Adapter<DocumentAdapter.Docume
             itemView.setOnLongClickListener(v -> {
                 int position = getAdapterPosition();
                 if (position != RecyclerView.NO_POSITION && onItemLongClickListener != null) {
-                    onItemLongClickListener.onItemLongClick(documents.get(position));
-                    return true;
+                    return onItemLongClickListener.onItemLongClick(documents.get(position));
                 }
                 return false;
             });

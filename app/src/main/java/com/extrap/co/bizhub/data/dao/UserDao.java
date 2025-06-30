@@ -42,6 +42,12 @@ public interface UserDao {
     @Query("SELECT * FROM users")
     LiveData<List<User>> getAllUsers();
     
+    @Query("SELECT * FROM users")
+    List<User> getAllUsersSync();
+    
+    @Query("SELECT COUNT(*) FROM users")
+    int getUserCount();
+    
     @Query("SELECT COUNT(*) FROM users WHERE role = 'technician' AND isActive = 1")
     int getActiveTechnicianCount();
     
@@ -60,13 +66,10 @@ public interface UserDao {
     @Query("SELECT * FROM users WHERE role = 'technician' AND isActive = 1 ORDER BY firstName ASC")
     LiveData<List<User>> getActiveTechnicians();
     
-    @Query("SELECT * FROM users ORDER BY first_name ASC")
-    LiveData<List<User>> getAllUsers();
-    
     @Query("SELECT * FROM users WHERE id = :id")
     User getUserById(long id);
     
-    @Query("SELECT * FROM users WHERE first_name LIKE '%' || :searchQuery || '%' OR last_name LIKE '%' || :searchQuery || '%' OR email LIKE '%' || :searchQuery || '%'")
+    @Query("SELECT * FROM users WHERE firstName LIKE '%' || :searchQuery || '%' OR lastName LIKE '%' || :searchQuery || '%' OR email LIKE '%' || :searchQuery || '%'")
     List<User> searchUsers(String searchQuery);
     
     @Query("SELECT COUNT(*) FROM users WHERE role = :role")
@@ -74,4 +77,10 @@ public interface UserDao {
     
     @Query("DELETE FROM users WHERE id = :id")
     void deleteUserById(long id);
+    
+    @Query("SELECT * FROM users WHERE syncStatus = 'pending'")
+    List<User> getPendingSyncUsers();
+    
+    @Query("SELECT COUNT(*) FROM users WHERE syncStatus = 'pending'")
+    int getPendingSyncUserCount();
 } 

@@ -155,15 +155,6 @@ public class PreferenceManager {
     }
 
     // Settings Methods
-    public void setNotificationsEnabled(boolean enabled) {
-        editor.putBoolean("notifications_enabled", enabled);
-        editor.apply();
-    }
-
-    public boolean areNotificationsEnabled() {
-        return sharedPreferences.getBoolean("notifications_enabled", true);
-    }
-
     public void setEmailNotificationsEnabled(boolean enabled) {
         editor.putBoolean("email_notifications_enabled", enabled);
         editor.apply();
@@ -200,15 +191,6 @@ public class PreferenceManager {
         return sharedPreferences.getBoolean("vibration_notifications_enabled", true);
     }
 
-    public void setAutoSync(boolean enabled) {
-        editor.putBoolean("auto_sync_enabled", enabled);
-        editor.apply();
-    }
-
-    public boolean isAutoSyncEnabled() {
-        return sharedPreferences.getBoolean("auto_sync_enabled", true);
-    }
-
     public void setWifiOnlySync(boolean enabled) {
         editor.putBoolean("wifi_only_sync_enabled", enabled);
         editor.apply();
@@ -225,15 +207,6 @@ public class PreferenceManager {
 
     public boolean isBackgroundSyncEnabled() {
         return sharedPreferences.getBoolean("background_sync_enabled", true);
-    }
-
-    public void setLocationTracking(boolean enabled) {
-        editor.putBoolean("location_tracking_enabled", enabled);
-        editor.apply();
-    }
-
-    public boolean isLocationTrackingEnabled() {
-        return sharedPreferences.getBoolean("location_tracking_enabled", true);
     }
 
     public void setGpsTracking(boolean enabled) {

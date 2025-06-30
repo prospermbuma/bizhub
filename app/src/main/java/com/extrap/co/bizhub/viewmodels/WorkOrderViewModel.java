@@ -59,19 +59,19 @@ public class WorkOrderViewModel extends ViewModel {
                 switch (filter) {
                     case "all":
                         orders = FieldServiceApp.getInstance().getDatabase()
-                            .workOrderDao().getAllWorkOrders().getValue();
+                            .workOrderDao().getAllWorkOrdersSync();
                         break;
                     case "pending":
                         orders = FieldServiceApp.getInstance().getDatabase()
-                            .workOrderDao().getWorkOrdersByStatus("pending");
+                            .workOrderDao().getWorkOrdersByStatusSync("pending");
                         break;
                     case "in_progress":
                         orders = FieldServiceApp.getInstance().getDatabase()
-                            .workOrderDao().getWorkOrdersByStatus("in_progress");
+                            .workOrderDao().getWorkOrdersByStatusSync("in_progress");
                         break;
                     case "completed":
                         orders = FieldServiceApp.getInstance().getDatabase()
-                            .workOrderDao().getWorkOrdersByStatus("completed");
+                            .workOrderDao().getWorkOrdersByStatusSync("completed");
                         break;
                     case "today":
                         Calendar today = Calendar.getInstance();
@@ -79,7 +79,7 @@ public class WorkOrderViewModel extends ViewModel {
                         today.add(Calendar.DAY_OF_MONTH, 1);
                         long endOfDay = today.getTimeInMillis();
                         orders = FieldServiceApp.getInstance().getDatabase()
-                            .workOrderDao().getWorkOrdersByDateRange(startOfDay, endOfDay);
+                            .workOrderDao().getWorkOrdersByDateRangeSync(startOfDay, endOfDay);
                         break;
                     case "completed_today":
                         Calendar today2 = Calendar.getInstance();
@@ -183,5 +183,92 @@ public class WorkOrderViewModel extends ViewModel {
         // TODO: Implement search functionality
         // For now, just reload all work orders
         loadWorkOrders();
+    }
+
+    // Additional methods for compatibility
+    public LiveData<WorkOrder> getWorkOrderById(long workOrderId) {
+        MutableLiveData<WorkOrder> workOrder = new MutableLiveData<>();
+        executorService.execute(() -> {
+            try {
+                WorkOrder wo = FieldServiceApp.getInstance().getDatabase()
+                    .workOrderDao().getWorkOrderByIdSync((int) workOrderId);
+                workOrder.postValue(wo);
+            } catch (Exception e) {
+                errorMessage.postValue("Error loading work order: " + e.getMessage());
+            }
+        });
+        return workOrder;
+    }
+
+    public LiveData<Integer> getWorkOrderCount() {
+        MutableLiveData<Integer> count = new MutableLiveData<>();
+        executorService.execute(() -> {
+            try {
+                int workOrderCount = FieldServiceApp.getInstance().getDatabase()
+                    .workOrderDao().getWorkOrderCount();
+                count.postValue(workOrderCount);
+            } catch (Exception e) {
+                errorMessage.postValue("Error getting work order count: " + e.getMessage());
+            }
+        });
+        return count;
+    }
+
+    public LiveData<Integer> getPendingWorkOrderCount() {
+        MutableLiveData<Integer> count = new MutableLiveData<>();
+        executorService.execute(() -> {
+            try {
+                int pendingCount = FieldServiceApp.getInstance().getDatabase()
+                    .workOrderDao().getPendingWorkOrderCount();
+                count.postValue(pendingCount);
+            } catch (Exception e) {
+                errorMessage.postValue("Error getting pending count: " + e.getMessage());
+            }
+        });
+        return count;
+    }
+
+    public LiveData<Integer> getInProgressWorkOrderCount() {
+        MutableLiveData<Integer> count = new MutableLiveData<>();
+        executorService.execute(() -> {
+            try {
+                int inProgressCount = FieldServiceApp.getInstance().getDatabase()
+                    .workOrderDao().getInProgressWorkOrderCount();
+                count.postValue(inProgressCount);
+            } catch (Exception e) {
+                errorMessage.postValue("Error getting in-progress count: " + e.getMessage());
+            }
+        });
+        return count;
+    }
+
+    public LiveData<Integer> getCompletedWorkOrderCount() {
+        MutableLiveData<Integer> count = new MutableLiveData<>();
+        executorService.execute(() -> {
+            try {
+                Calendar today = Calendar.getInstance();
+                long startOfDay = today.getTimeInMillis();
+                int completedCount = FieldServiceApp.getInstance().getDatabase()
+                    .workOrderDao().getCompletedWorkOrderCount(startOfDay);
+                count.postValue(completedCount);
+            } catch (Exception e) {
+                errorMessage.postValue("Error getting completed count: " + e.getMessage());
+            }
+        });
+        return count;
+    }
+
+    public LiveData<Integer> getHighPriorityWorkOrderCount() {
+        MutableLiveData<Integer> count = new MutableLiveData<>();
+        executorService.execute(() -> {
+            try {
+                int highPriorityCount = FieldServiceApp.getInstance().getDatabase()
+                    .workOrderDao().getHighPriorityWorkOrderCount();
+                count.postValue(highPriorityCount);
+            } catch (Exception e) {
+                errorMessage.postValue("Error getting high priority count: " + e.getMessage());
+            }
+        });
+        return count;
     }
 } 

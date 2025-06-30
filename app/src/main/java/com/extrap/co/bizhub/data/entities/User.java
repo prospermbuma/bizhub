@@ -1,6 +1,7 @@
 package com.extrap.co.bizhub.data.entities;
 
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "users")
@@ -20,10 +21,12 @@ public class User {
     private long lastLoginAt;
     private String securityQuestion;
     private String securityAnswer;
+    private String syncStatus = "synced"; // synced, pending, error
     
     // Constructors
     public User() {}
     
+    @Ignore
     public User(String email, String password, String firstName, String lastName, String phoneNumber, String role) {
         this.email = email;
         this.password = password;
@@ -142,5 +145,32 @@ public class User {
     
     public void setSecurityAnswer(String securityAnswer) {
         this.securityAnswer = securityAnswer;
+    }
+
+    public String getName() {
+        return getFullName();
+    }
+
+    public void setName(String name) {
+        // Split the name into first and last name
+        String[] nameParts = name.split(" ", 2);
+        this.firstName = nameParts[0];
+        this.lastName = nameParts.length > 1 ? nameParts[1] : "";
+    }
+
+    public String getPhone() {
+        return phoneNumber;
+    }
+
+    public void setPhone(String phone) {
+        this.phoneNumber = phone;
+    }
+
+    public String getSyncStatus() {
+        return syncStatus;
+    }
+
+    public void setSyncStatus(String syncStatus) {
+        this.syncStatus = syncStatus;
     }
 } 

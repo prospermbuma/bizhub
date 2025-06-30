@@ -45,13 +45,13 @@ public interface DocumentDao {
     @Query("SELECT * FROM documents WHERE source = :source ORDER BY createdAt DESC")
     LiveData<List<Document>> getDocumentsBySource(String source);
     
-    @Query("SELECT * FROM documents WHERE fileType LIKE '%image%' ORDER BY createdAt DESC")
+    @Query("SELECT * FROM documents WHERE mimeType LIKE '%image%' ORDER BY createdAt DESC")
     LiveData<List<Document>> getImageDocuments();
     
-    @Query("SELECT * FROM documents WHERE fileType LIKE '%pdf%' ORDER BY createdAt DESC")
+    @Query("SELECT * FROM documents WHERE mimeType LIKE '%pdf%' ORDER BY createdAt DESC")
     LiveData<List<Document>> getPdfDocuments();
     
-    @Query("SELECT * FROM documents WHERE fileType LIKE '%video%' ORDER BY createdAt DESC")
+    @Query("SELECT * FROM documents WHERE mimeType LIKE '%video%' ORDER BY createdAt DESC")
     LiveData<List<Document>> getVideoDocuments();
     
     @Query("SELECT COUNT(*) FROM documents")

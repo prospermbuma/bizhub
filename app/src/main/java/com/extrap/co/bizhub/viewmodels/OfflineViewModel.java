@@ -238,14 +238,6 @@ public class OfflineViewModel extends AndroidViewModel {
         return offlineManager.hasPendingSync();
     }
     
-    public int getPendingSyncCount() {
-        return offlineManager.getPendingSyncCount();
-    }
-    
-    public long getLastSyncTime() {
-        return offlineManager.getLastSyncTime();
-    }
-    
     public boolean isNetworkAvailable() {
         return networkUtils.isNetworkAvailable();
     }

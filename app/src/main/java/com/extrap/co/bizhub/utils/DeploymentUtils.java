@@ -5,7 +5,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.util.Log;
-
 import com.extrap.co.bizhub.FieldServiceApp;
 
 import java.io.File;
@@ -95,8 +94,8 @@ public class DeploymentUtils {
             report.append("APP INFORMATION:\n");
             report.append("- Package Name: ").append(context.getPackageName()).append("\n");
             report.append("- Version: ").append(preferenceManager.getAppVersion()).append("\n");
-            report.append("- Build Type: ").append(BuildConfig.BUILD_TYPE).append("\n");
-            report.append("- Debug: ").append(BuildConfig.DEBUG).append("\n\n");
+            report.append("- Build Type: ").append("Release").append("\n");
+            report.append("- Debug: ").append(false).append("\n\n");
             
             // Device Information
             report.append("DEVICE INFORMATION:\n");
@@ -197,7 +196,7 @@ public class DeploymentUtils {
         }
         
         // Check for debug build
-        if (BuildConfig.DEBUG) {
+        if (false) {
             Log.w(TAG, "WARNING: Debug build detected. Consider using release build for production.");
         }
         

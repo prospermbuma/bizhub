@@ -7,14 +7,18 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 import com.extrap.co.bizhub.data.dao.CustomerDao;
+import com.extrap.co.bizhub.data.dao.DocumentDao;
+import com.extrap.co.bizhub.data.dao.NotificationDao;
 import com.extrap.co.bizhub.data.dao.UserDao;
 import com.extrap.co.bizhub.data.dao.WorkOrderDao;
 import com.extrap.co.bizhub.data.entities.Customer;
+import com.extrap.co.bizhub.data.entities.Document;
+import com.extrap.co.bizhub.data.entities.NotificationItem;
 import com.extrap.co.bizhub.data.entities.User;
 import com.extrap.co.bizhub.data.entities.WorkOrder;
 
 @Database(
-    entities = {User.class, Customer.class, WorkOrder.class},
+    entities = {User.class, Customer.class, WorkOrder.class, Document.class, NotificationItem.class},
     version = 1,
     exportSchema = false
 )
@@ -27,6 +31,8 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract UserDao userDao();
     public abstract CustomerDao customerDao();
     public abstract WorkOrderDao workOrderDao();
+    public abstract DocumentDao documentDao();
+    public abstract NotificationDao notificationDao();
     
     public static AppDatabase getInstance(Context context) {
         if (INSTANCE == null) {

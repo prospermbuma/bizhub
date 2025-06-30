@@ -11,6 +11,8 @@ import com.extrap.co.bizhub.FieldServiceApp;
 import com.extrap.co.bizhub.data.entities.WorkOrder;
 
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class MapViewModel extends AndroidViewModel {
     
@@ -18,6 +20,7 @@ public class MapViewModel extends AndroidViewModel {
     private MutableLiveData<List<WorkOrder>> workOrders;
     private MutableLiveData<Location> currentLocation;
     private MutableLiveData<String> errorMessage;
+    private ExecutorService executorService;
     
     public MapViewModel(Application application) {
         super(application);
@@ -25,6 +28,7 @@ public class MapViewModel extends AndroidViewModel {
         workOrders = new MutableLiveData<>();
         currentLocation = new MutableLiveData<>();
         errorMessage = new MutableLiveData<>();
+        executorService = Executors.newSingleThreadExecutor();
     }
     
     public LiveData<List<WorkOrder>> getWorkOrders() {
@@ -55,25 +59,25 @@ public class MapViewModel extends AndroidViewModel {
     }
     
     public void loadWorkOrdersByStatus(String status) {
-        new Thread(() -> {
+        executorService.execute(() -> {
             try {
-                List<WorkOrder> orders = app.getDatabase().workOrderDao().getWorkOrdersByStatus(status);
+                List<WorkOrder> orders = app.getDatabase().workOrderDao().getWorkOrdersByStatusSync(status);
                 workOrders.postValue(orders);
             } catch (Exception e) {
                 errorMessage.postValue("Error loading work orders: " + e.getMessage());
             }
-        }).start();
+        });
     }
     
     public void loadWorkOrdersByPriority(String priority) {
-        new Thread(() -> {
+        executorService.execute(() -> {
             try {
-                List<WorkOrder> orders = app.getDatabase().workOrderDao().getWorkOrdersByPriority(priority);
+                List<WorkOrder> orders = app.getDatabase().workOrderDao().getWorkOrdersByPrioritySync(priority);
                 workOrders.postValue(orders);
             } catch (Exception e) {
                 errorMessage.postValue("Error loading work orders: " + e.getMessage());
             }
-        }).start();
+        });
     }
     
     public void loadWorkOrdersNearLocation(double latitude, double longitude, double radiusKm) {

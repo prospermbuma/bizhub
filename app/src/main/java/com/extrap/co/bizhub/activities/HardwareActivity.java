@@ -29,7 +29,7 @@ import com.extrap.co.bizhub.viewmodels.HardwareViewModel;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.switchmaterial.SwitchMaterial;
-import com.google.android.material.textview.TextView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;

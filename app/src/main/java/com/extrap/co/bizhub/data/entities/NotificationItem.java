@@ -1,6 +1,7 @@
 package com.extrap.co.bizhub.data.entities;
 
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "notifications")
@@ -20,6 +21,7 @@ public class NotificationItem {
     // Constructors
     public NotificationItem() {}
     
+    @Ignore
     public NotificationItem(String title, String message, String type) {
         this.title = title;
         this.message = message;
@@ -29,6 +31,7 @@ public class NotificationItem {
         this.priority = "medium";
     }
     
+    @Ignore
     public NotificationItem(String title, String message, String type, long referenceId) {
         this.title = title;
         this.message = message;

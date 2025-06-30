@@ -76,13 +76,11 @@ public class WorkOrdersFragment extends Fragment {
         
         // Set click listeners
         adapter.setOnItemClickListener(new WorkOrderAdapter.OnItemClickListener() {
-            @Override
             public void onItemClick(WorkOrder workOrder) {
                 // TODO: Navigate to work order details
                 Snackbar.make(workOrdersRecyclerView, "Opening work order: " + workOrder.getWorkOrderNumber(), Snackbar.LENGTH_SHORT).show();
             }
             
-            @Override
             public void onStatusClick(WorkOrder workOrder) {
                 showStatusChangeDialog(workOrder);
             }

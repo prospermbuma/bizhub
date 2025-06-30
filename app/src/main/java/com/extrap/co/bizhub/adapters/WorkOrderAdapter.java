@@ -23,9 +23,13 @@ public class WorkOrderAdapter extends RecyclerView.Adapter<WorkOrderAdapter.View
     private List<WorkOrder> workOrders;
     private SimpleDateFormat dateFormat;
     private OnItemClickListener onItemClickListener;
+    private OnStatusClickListener onStatusClickListener;
     
     public interface OnItemClickListener {
         void onItemClick(WorkOrder workOrder);
+    }
+    
+    public interface OnStatusClickListener {
         void onStatusClick(WorkOrder workOrder);
     }
     
@@ -67,6 +71,10 @@ public class WorkOrderAdapter extends RecyclerView.Adapter<WorkOrderAdapter.View
         this.onItemClickListener = listener;
     }
     
+    public void setOnStatusClickListener(OnStatusClickListener listener) {
+        this.onStatusClickListener = listener;
+    }
+    
     class ViewHolder extends RecyclerView.ViewHolder {
         private TextView workOrderNumber;
         private TextView customerName;
@@ -96,8 +104,8 @@ public class WorkOrderAdapter extends RecyclerView.Adapter<WorkOrderAdapter.View
             
             statusChip.setOnClickListener(v -> {
                 int position = getAdapterPosition();
-                if (position != RecyclerView.NO_POSITION && onItemClickListener != null) {
-                    onItemClickListener.onStatusClick(workOrders.get(position));
+                if (position != RecyclerView.NO_POSITION && onStatusClickListener != null) {
+                    onStatusClickListener.onStatusClick(workOrders.get(position));
                 }
             });
         }

@@ -20,5 +20,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Bizhub"
+rootProject.name = "FSP"
 include ':app'

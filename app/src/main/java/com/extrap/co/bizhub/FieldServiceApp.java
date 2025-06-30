@@ -78,8 +78,8 @@ public class FieldServiceApp extends Application {
     
     private void initializeSampleData() {
         executorService.execute(() -> {
-            // Check if sample data already exists
-            if (database.userDao().getAllUsers().isEmpty()) {
+            // Check if sample data already exists using synchronous method
+            if (database.userDao().getAllUsersSync().isEmpty()) {
                 // Create sample users
                 User adminUser = new User("admin@bizhub.com", "password123", "John", "Doe", "+1234567890", "admin");
                 long adminId = database.userDao().insertUser(adminUser);

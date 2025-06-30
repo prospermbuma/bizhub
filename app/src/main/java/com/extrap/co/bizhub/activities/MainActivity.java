@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.extrap.co.bizhub.R;
 import com.extrap.co.bizhub.adapters.WorkOrderAdapter;
+import com.extrap.co.bizhub.data.entities.WorkOrder;
 import com.extrap.co.bizhub.viewmodels.WorkOrderViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import android.util.Log;
@@ -93,7 +94,58 @@ public class MainActivity extends AppCompatActivity {
         viewModel = new ViewModelProvider(this).get(WorkOrderViewModel.class);
         viewModel.getWorkOrders().observe(this, workOrders -> {
             adapter.updateWorkOrders(workOrders);
+            
+            // If no work orders exist, add some sample data
+            if (workOrders == null || workOrders.isEmpty()) {
+                addSampleWorkOrders();
+            }
         });
+        
+        // Load work orders when the activity starts
+        viewModel.loadWorkOrders();
+    }
+    
+    private void addSampleWorkOrders() {
+        // Add some sample work orders for testing
+        WorkOrder sample1 = new WorkOrder();
+        sample1.setWorkOrderNumber("WO-001");
+        sample1.setCustomerId(1);
+        sample1.setServiceType("Maintenance");
+        sample1.setDescription("Regular HVAC maintenance check");
+        sample1.setStatus("pending");
+        sample1.setPriority("medium");
+        sample1.setScheduledDate(System.currentTimeMillis() + 86400000); // Tomorrow
+        sample1.setDueDate(System.currentTimeMillis() + 172800000); // Day after tomorrow
+        sample1.setCreatedAt(System.currentTimeMillis());
+        sample1.setUpdatedAt(System.currentTimeMillis());
+        
+        WorkOrder sample2 = new WorkOrder();
+        sample2.setWorkOrderNumber("WO-002");
+        sample2.setCustomerId(2);
+        sample2.setServiceType("Repair");
+        sample2.setDescription("Fix broken water heater");
+        sample2.setStatus("in_progress");
+        sample2.setPriority("high");
+        sample2.setScheduledDate(System.currentTimeMillis());
+        sample2.setDueDate(System.currentTimeMillis() + 86400000);
+        sample2.setCreatedAt(System.currentTimeMillis());
+        sample2.setUpdatedAt(System.currentTimeMillis());
+        
+        WorkOrder sample3 = new WorkOrder();
+        sample3.setWorkOrderNumber("WO-003");
+        sample3.setCustomerId(3);
+        sample3.setServiceType("Installation");
+        sample3.setDescription("Install new security system");
+        sample3.setStatus("completed");
+        sample3.setPriority("low");
+        sample3.setScheduledDate(System.currentTimeMillis() - 86400000); // Yesterday
+        sample3.setDueDate(System.currentTimeMillis());
+        sample3.setCreatedAt(System.currentTimeMillis());
+        sample3.setUpdatedAt(System.currentTimeMillis());
+        
+        viewModel.addWorkOrder(sample1);
+        viewModel.addWorkOrder(sample2);
+        viewModel.addWorkOrder(sample3);
     }
     
     private void setupClickListeners() {
@@ -103,10 +155,17 @@ public class MainActivity extends AppCompatActivity {
             // startActivity(intent);
         });
         
-        adapter.setOnItemClickListener(workOrder -> {
-            Intent intent = new Intent(this, WorkOrderActivity.class);
-            intent.putExtra("work_order_id", workOrder.getId());
-            startActivity(intent);
+        adapter.setOnItemClickListener(new WorkOrderAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(WorkOrder workOrder) {
+                Intent intent = new Intent(MainActivity.this, WorkOrderActivity.class);
+                intent.putExtra("work_order_id", workOrder.getId());
+                startActivity(intent);
+            }
+            
+            public void onStatusClick(WorkOrder workOrder) {
+                // TODO: Handle status click
+            }
         });
     }
     

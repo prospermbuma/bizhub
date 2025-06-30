@@ -1,6 +1,7 @@
 package com.extrap.co.bizhub.data.entities;
 
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "customers")
@@ -27,10 +28,15 @@ public class Customer {
     private long createdAt;
     private long updatedAt;
     private long dateAdded;
+    private String contactPerson;
+    private String companySize;
+    private String industry;
+    private String syncStatus = "synced"; // synced, pending, error
     
     // Constructors
     public Customer() {}
     
+    @Ignore
     public Customer(String name, String email, String phoneNumber, String address) {
         this.name = name;
         this.email = email;
@@ -222,5 +228,38 @@ public class Customer {
             address.append(this.zipCode);
         }
         return address.toString();
+    }
+
+    public void setContactPerson(String contactPerson) {
+        this.contactPerson = contactPerson;
+    }
+
+    public void setCompanySize(String companySize) {
+        this.companySize = companySize;
+    }
+
+    public void setIndustry(String industry) {
+        this.industry = industry;
+    }
+
+    // Additional methods for compatibility
+    public String getContactPerson() {
+        return contactPerson;
+    }
+
+    public String getCompanySize() {
+        return companySize;
+    }
+
+    public String getIndustry() {
+        return industry;
+    }
+
+    public String getSyncStatus() {
+        return syncStatus;
+    }
+
+    public void setSyncStatus(String syncStatus) {
+        this.syncStatus = syncStatus;
     }
 } 

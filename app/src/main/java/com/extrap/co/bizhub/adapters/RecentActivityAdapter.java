@@ -23,6 +23,11 @@ public class RecentActivityAdapter extends RecyclerView.Adapter<RecentActivityAd
     private List<WorkOrder> activities;
     private SimpleDateFormat dateFormat;
     
+    public RecentActivityAdapter() {
+        this.activities = new ArrayList<>();
+        this.dateFormat = new SimpleDateFormat("MMM dd, HH:mm", Locale.getDefault());
+    }
+    
     public RecentActivityAdapter(List<WorkOrder> activities) {
         this.activities = activities;
         this.dateFormat = new SimpleDateFormat("MMM dd, HH:mm", Locale.getDefault());

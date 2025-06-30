@@ -254,7 +254,7 @@ public class OfflineManager {
         try {
             // Check if essential data is available
             int workOrderCount = database.workOrderDao().getWorkOrderCount();
-            int customerCount = database.customerDao().getCustomerCount();
+            int customerCount = database.customerDao().getCustomerCountSync();
             int userCount = database.userDao().getUserCount();
             
             Log.d(TAG, "Offline data validation - Work Orders: " + workOrderCount + 

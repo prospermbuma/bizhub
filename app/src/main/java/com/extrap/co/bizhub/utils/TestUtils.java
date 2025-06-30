@@ -280,7 +280,7 @@ public class TestUtils {
             CustomerDao customerDao = database.customerDao();
             
             // Test customer count
-            int customerCount = customerDao.getCustomerCount();
+            int customerCount = customerDao.getCustomerCountSync();
             Log.d(TAG, "Customer count: " + customerCount);
             
             // Test customer by name

@@ -19,10 +19,10 @@ public interface CustomerDao {
     long insertCustomer(Customer customer);
     
     @Update
-    void updateCustomer(Customer customer);
+    int updateCustomer(Customer customer);
     
     @Delete
-    void deleteCustomer(Customer customer);
+    int deleteCustomer(Customer customer);
     
     @Query("SELECT * FROM customers WHERE id = :customerId")
     LiveData<Customer> getCustomerById(int customerId);
@@ -39,8 +39,20 @@ public interface CustomerDao {
     @Query("SELECT * FROM customers WHERE name LIKE '%' || :searchQuery || '%' OR email LIKE '%' || :searchQuery || '%' OR phoneNumber LIKE '%' || :searchQuery || '%'")
     LiveData<List<Customer>> searchCustomers(String searchQuery);
     
+    @Query("SELECT * FROM customers WHERE name LIKE '%' || :searchQuery || '%' OR email LIKE '%' || :searchQuery || '%' OR phoneNumber LIKE '%' || :searchQuery || '%'")
+    List<Customer> searchCustomersSync(String searchQuery);
+    
+    @Query("SELECT * FROM customers WHERE name = :name LIMIT 1")
+    Customer getCustomerByName(String name);
+    
     @Query("SELECT * FROM customers WHERE customerType = :customerType")
     LiveData<List<Customer>> getCustomersByType(String customerType);
+    
+    @Query("SELECT * FROM customers WHERE isPremium = :isPremium")
+    LiveData<List<Customer>> getCustomersByType(boolean isPremium);
+    
+    @Query("SELECT * FROM customers WHERE isPremium = :isPremium")
+    List<Customer> getCustomersByTypeSync(boolean isPremium);
     
     @Query("SELECT COUNT(*) FROM customers WHERE isActive = 1")
     int getActiveCustomerCount();
@@ -64,14 +76,11 @@ public interface CustomerDao {
     void deleteCustomerById(long id);
     
     // Additional methods for CustomerViewModel
-    @Query("SELECT * FROM customers WHERE name LIKE :searchQuery OR email LIKE :searchQuery OR phone LIKE :searchQuery OR company LIKE :searchQuery")
-    List<Customer> searchCustomers(String searchQuery);
-    
     @Query("SELECT * FROM customers WHERE isActive = :isActive")
     List<Customer> getCustomersByStatus(boolean isActive);
     
     @Query("SELECT * FROM customers WHERE isPremium = :isPremium")
-    List<Customer> getCustomersByType(boolean isPremium);
+    List<Customer> getPremiumCustomers(boolean isPremium);
     
     @Query("SELECT * FROM customers ORDER BY name ASC")
     List<Customer> getCustomersSortedByName();
@@ -88,8 +97,8 @@ public interface CustomerDao {
     @Query("SELECT COUNT(*) FROM customers")
     LiveData<Integer> getCustomerCount();
     
-    @Query("SELECT COUNT(*) FROM customers WHERE isActive = 1")
-    LiveData<Integer> getActiveCustomerCount();
+    @Query("SELECT COUNT(*) FROM customers")
+    int getCustomerCountSync();
     
     @Query("SELECT COUNT(*) FROM customers WHERE isPremium = 1")
     LiveData<Integer> getPremiumCustomerCount();
@@ -99,4 +108,13 @@ public interface CustomerDao {
     
     @Query("UPDATE customers SET isActive = :isActive WHERE id = :customerId")
     int updateCustomerStatus(long customerId, boolean isActive);
+    
+    @Query("SELECT * FROM customers WHERE syncStatus = 'pending'")
+    List<Customer> getPendingSyncCustomers();
+    
+    @Query("SELECT COUNT(*) FROM customers WHERE syncStatus = 'pending'")
+    int getPendingSyncCustomerCount();
+    
+    @Query("DELETE FROM customers WHERE dateAdded < :timestamp")
+    void deleteOldCustomers(long timestamp);
 } 

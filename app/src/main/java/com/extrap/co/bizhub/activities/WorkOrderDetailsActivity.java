@@ -84,7 +84,7 @@ public class WorkOrderDetailsActivity extends AppCompatActivity {
         // TODO: Load work order details from database
         // For now, create a sample work order
         currentWorkOrder = new WorkOrder();
-        currentWorkOrder.setId(workOrderId);
+        currentWorkOrder.setId((int) workOrderId);
         currentWorkOrder.setWorkOrderNumber("WO-" + String.format("%03d", (int) workOrderId));
         currentWorkOrder.setCustomerName("AC Repair - John Smith");
         currentWorkOrder.setServiceType("Repair");

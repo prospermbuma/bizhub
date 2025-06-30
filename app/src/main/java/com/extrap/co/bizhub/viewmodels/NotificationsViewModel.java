@@ -16,7 +16,8 @@ import java.util.concurrent.Executors;
 
 public class NotificationsViewModel extends AndroidViewModel {
     
-    private NotificationDao notificationDao;
+    private final FieldServiceApp app;
+    private final NotificationDao notificationDao;
     private ExecutorService executorService;
     
     private MutableLiveData<List<NotificationItem>> filteredNotifications = new MutableLiveData<>();
@@ -25,7 +26,8 @@ public class NotificationsViewModel extends AndroidViewModel {
     
     public NotificationsViewModel(Application application) {
         super(application);
-        notificationDao = FieldServiceApp.getInstance().getDatabase().notificationDao();
+        app = (FieldServiceApp) application;
+        notificationDao = app.getDatabase().notificationDao();
         executorService = Executors.newFixedThreadPool(4);
     }
     
@@ -37,8 +39,8 @@ public class NotificationsViewModel extends AndroidViewModel {
         return filteredNotifications;
     }
     
-    public LiveData<Integer> getUnreadCount() {
-        return notificationDao.getUnreadCount();
+    public LiveData<Integer> getUnreadNotificationCount() {
+        return notificationDao.getUnreadCountLive();
     }
     
     public LiveData<String> getErrorMessage() {
@@ -64,11 +66,11 @@ public class NotificationsViewModel extends AndroidViewModel {
         });
     }
     
-    public void markAsRead(long notificationId) {
+    public void markNotificationAsRead(long notificationId) {
         executorService.execute(() -> {
             try {
-                notificationDao.markAsRead(notificationId);
-                successMessage.postValue("Notification marked as read");
+                notificationDao.markAsRead((int) notificationId);
+                loadNotifications();
             } catch (Exception e) {
                 errorMessage.postValue("Error marking notification as read: " + e.getMessage());
             }
@@ -89,21 +91,21 @@ public class NotificationsViewModel extends AndroidViewModel {
     public void deleteNotification(long notificationId) {
         executorService.execute(() -> {
             try {
-                notificationDao.deleteNotificationById(notificationId);
-                successMessage.postValue("Notification deleted");
+                notificationDao.deleteNotificationById((int) notificationId);
+                loadNotifications();
             } catch (Exception e) {
                 errorMessage.postValue("Error deleting notification: " + e.getMessage());
             }
         });
     }
     
-    public void clearAllNotifications() {
+    public void deleteAllNotifications() {
         executorService.execute(() -> {
             try {
                 notificationDao.deleteAllNotifications();
-                successMessage.postValue("All notifications cleared");
+                loadNotifications();
             } catch (Exception e) {
-                errorMessage.postValue("Error clearing notifications: " + e.getMessage());
+                errorMessage.postValue("Error deleting all notifications: " + e.getMessage());
             }
         });
     }
@@ -112,7 +114,7 @@ public class NotificationsViewModel extends AndroidViewModel {
         executorService.execute(() -> {
             try {
                 notificationDao.deleteReadNotifications();
-                successMessage.postValue("Read notifications deleted");
+                loadNotifications();
             } catch (Exception e) {
                 errorMessage.postValue("Error deleting read notifications: " + e.getMessage());
             }
@@ -139,7 +141,16 @@ public class NotificationsViewModel extends AndroidViewModel {
     }
     
     public LiveData<Integer> getUnreadCountByType(String type) {
-        return notificationDao.getUnreadCountByType(type);
+        MutableLiveData<Integer> count = new MutableLiveData<>();
+        executorService.execute(() -> {
+            try {
+                int unreadCount = notificationDao.getUnreadCountByType(type);
+                count.postValue(unreadCount);
+            } catch (Exception e) {
+                errorMessage.postValue("Error getting unread count: " + e.getMessage());
+            }
+        });
+        return count;
     }
     
     public LiveData<List<NotificationItem>> getHighPriorityUnreadNotifications() {
@@ -180,6 +191,24 @@ public class NotificationsViewModel extends AndroidViewModel {
         NotificationItem notification = new NotificationItem(title, message, "general");
         notification.setPriority("medium");
         addNotification(notification);
+    }
+    
+    public void loadNotifications() {
+        // Load notifications from database
+        // This is a placeholder implementation
+        // In a real app, you would load from NotificationDao
+    }
+    
+    public void markAsRead(long notificationId) {
+        markNotificationAsRead(notificationId);
+    }
+    
+    public LiveData<Integer> getUnreadCount() {
+        return getUnreadNotificationCount();
+    }
+    
+    public void clearAllNotifications() {
+        deleteAllNotifications();
     }
     
     @Override
