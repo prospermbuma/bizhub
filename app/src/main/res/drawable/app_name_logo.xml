@@ -1,8 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android"
-    android:shape="rectangle">
-    <solid android:color="@color/transparent" />
-    <size
-        android:width="200dp"
-        android:height="40dp" />
-</shape> 
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="120dp"
+    android:height="40dp"
+    android:viewportWidth="120"
+    android:viewportHeight="40">
+    
+    <!-- Background rectangle with rounded corners -->
+    <path
+        android:fillColor="@color/primary"
+        android:pathData="M0,0 L120,0 C120,0 120,8 120,8 L120,32 C120,32 120,40 120,40 L0,40 C0,40 0,32 0,32 L0,8 C0,8 0,0 0,0 Z" />
+    
+    <!-- Text "BizHub" -->
+    <path
+        android:fillColor="@color/white"
+        android:pathData="M10,12 L10,28 L15,28 L15,20 L20,20 L20,28 L25,28 L25,12 L20,12 L20,18 L15,18 L15,12 Z" />
+    
+    <path
+        android:fillColor="@color/white"
+        android:pathData="M30,12 L30,28 L35,28 L35,12 Z" />
+    
+    <path
+        android:fillColor="@color/white"
+        android:pathData="M40,12 L40,28 L45,28 C48,28 50,26 50,24 C50,22 48,20 45,20 L40,20 Z M45,22 C46,22 47,23 47,24 C47,25 46,26 45,26 L42,26 L42,22 Z" />
+    
+    <path
+        android:fillColor="@color/white"
+        android:pathData="M55,12 L55,28 L60,28 L60,12 Z" />
+    
+    <path
+        android:fillColor="@color/white"
+        android:pathData="M65,12 L65,28 L70,28 C73,28 75,26 75,24 C75,22 73,20 70,20 L65,20 Z M70,22 C71,22 72,23 72,24 C72,25 71,26 70,26 L67,26 L67,22 Z" />
+    
+    <path
+        android:fillColor="@color/white"
+        android:pathData="M80,12 L80,28 L85,28 L85,12 Z" />
+    
+    <path
+        android:fillColor="@color/white"
+        android:pathData="M90,12 L90,28 L95,28 C98,28 100,26 100,24 C100,22 98,20 95,20 L90,20 Z M95,22 C96,22 97,23 97,24 C97,25 96,26 95,26 L92,26 L92,22 Z" />
+    
+    <!-- Hub symbol -->
+    <path
+        android:fillColor="@color/accent"
+        android:pathData="M105,15 L105,25 L115,25 L115,15 Z" />
+    
+    <path
+        android:strokeColor="@color/accent"
+        android:strokeWidth="1.5"
+        android:pathData="M100,20 L105,20" />
+</vector> 

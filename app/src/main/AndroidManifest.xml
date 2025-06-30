@@ -116,11 +116,6 @@
             android:name=".activities.ContactActivity"
             android:exported="false" />
 
-        <!-- Main Activity (Work Orders) -->
-        <activity
-            android:name=".activities.MainActivity"
-            android:exported="false" />
-
         <!-- Report Activity -->
         <activity
             android:name=".activities.ReportActivity"

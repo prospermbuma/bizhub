@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/splash_background"
+    android:background="@color/primary"
     android:gravity="center">
 
     <LinearLayout
@@ -16,7 +16,7 @@
             android:id="@+id/logo_image_view"
             android:layout_width="120dp"
             android:layout_height="120dp"
-            android:src="@drawable/app_name_logo"
+            android:src="@mipmap/ic_launcher_foreground"
             android:contentDescription="@string/app_name" />
 
         <!-- App Name -->
@@ -36,7 +36,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Initializing..."
+            android:text="Loading FSP..."
             android:textColor="@color/white"
             android:textSize="16sp"
             android:alpha="0.8" />

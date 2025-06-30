@@ -11,24 +11,6 @@
         </shape>
     </item>
     
-    <!-- App logo -->
-    <item
-        android:width="120dp"
-        android:height="120dp"
-        android:gravity="center">
-        <bitmap
-            android:gravity="center"
-            android:src="@mipmap/ic_launcher" />
-    </item>
-    
-    <!-- App name -->
-    <item android:gravity="center_horizontal|bottom"
-        android:bottom="100dp">
-        <bitmap
-            android:gravity="center"
-            android:src="@drawable/app_name_logo" />
-    </item>
-    
     <!-- Loading indicator -->
     <item android:gravity="center_horizontal|bottom"
         android:bottom="50dp">

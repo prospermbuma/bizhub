@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp"
+    android:height="200dp"
+    android:viewportWidth="200"
+    android:viewportHeight="200">
+    
+    <!-- Background circle -->
+    <path
+        android:fillColor="@color/primary"
+        android:pathData="M100,100m-90,0a90,90 0,1 1,180 0a90,90 0,1 1,-180 0" />
+    
+    <!-- Letter B (larger and more prominent) -->
+    <path
+        android:fillColor="@color/white"
+        android:pathData="M50,40 L50,160 L80,160 C95,160 105,145 105,130 C105,115 95,100 80,100 L60,100 L60,90 L80,90 C95,90 105,75 105,60 C105,45 95,40 80,40 L50,40 Z M60,55 L80,55 C85,55 90,60 90,65 C90,70 85,75 80,75 L60,75 L60,55 Z M60,125 L80,125 C85,125 90,130 90,135 C90,140 85,145 80,145 L60,145 L60,125 Z" />
+    
+    <!-- Hub symbol (connected dots) -->
+    <path
+        android:fillColor="@color/accent"
+        android:pathData="M120,60 L120,80 L140,80 L140,60 Z" />
+    <path
+        android:fillColor="@color/accent"
+        android:pathData="M120,100 L120,120 L140,120 L140,100 Z" />
+    <path
+        android:fillColor="@color/accent"
+        android:pathData="M120,140 L120,160 L140,160 L140,140 Z" />
+    
+    <!-- Connection lines -->
+    <path
+        android:strokeColor="@color/accent"
+        android:strokeWidth="3"
+        android:pathData="M105,70 L120,70" />
+    <path
+        android:strokeColor="@color/accent"
+        android:strokeWidth="3"
+        android:pathData="M105,110 L120,110" />
+    <path
+        android:strokeColor="@color/accent"
+        android:strokeWidth="3"
+        android:pathData="M105,150 L120,150" />
+    
+    <!-- Center hub -->
+    <path
+        android:fillColor="@color/accent"
+        android:pathData="M130,100 L130,120 L150,120 L150,100 Z" />
+    
+    <!-- Connection lines to center -->
+    <path
+        android:strokeColor="@color/accent"
+        android:strokeWidth="3"
+        android:pathData="M140,80 L140,100" />
+    <path
+        android:strokeColor="@color/accent"
+        android:strokeWidth="3"
+        android:pathData="M140,120 L140,140" />
+    
+    <!-- App name text -->
+    <path
+        android:fillColor="@color/white"
+        android:pathData="M60,170 L60,185 L70,185 L70,175 L75,175 L75,185 L85,185 L85,170 L75,170 L75,180 L70,180 L70,170 Z" />
+    
+    <path
+        android:fillColor="@color/white"
+        android:pathData="M90,170 L90,185 L100,185 L100,170 Z" />
+    
+    <path
+        android:fillColor="@color/white"
+        android:pathData="M105,170 L105,185 L115,185 C118,185 120,183 120,180 C120,177 118,175 115,175 L105,175 Z M115,177 C116,177 117,178 117,180 C117,182 116,183 115,183 L107,183 L107,177 Z" />
+    
+    <path
+        android:fillColor="@color/white"
+        android:pathData="M125,170 L125,185 L135,185 L135,170 Z" />
+    
+    <path
+        android:fillColor="@color/white"
+        android:pathData="M140,170 L140,185 L150,185 C153,185 155,183 155,180 C155,177 153,175 150,175 L140,175 Z M150,177 C151,177 152,178 152,180 C152,182 151,183 150,183 L142,183 L142,177 Z" />
+</vector> 

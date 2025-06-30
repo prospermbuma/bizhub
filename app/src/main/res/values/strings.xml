@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">BizHub</string>
+    <string name="app_name">FSP</string>
     
     <!-- Navigation -->
     <string name="dashboard">Dashboard</string>
