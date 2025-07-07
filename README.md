@@ -1,4 +1,4 @@
-# BizHub - Field Service Management App
+# FSP - Field Service Management App
 
 [![Android](https://img.shields.io/badge/Android-API%2024+-green.svg)](https://developer.android.com/about/versions/android-14.0)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
@@ -6,7 +6,7 @@
 
 ## 📱 Overview
 
-BizHub is a comprehensive Android field service management application designed for technicians, service providers, and field workers. The app streamlines work order management, customer relationship management, and field operations with offline capabilities and real-time synchronization.
+FSP is a comprehensive Android field service management application designed for technicians, service providers, and field workers. The app streamlines work order management, customer relationship management, and field operations with offline capabilities and real-time synchronization.
 
 ## ✨ Features
 
